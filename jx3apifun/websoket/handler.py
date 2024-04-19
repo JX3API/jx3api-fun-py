@@ -6,9 +6,13 @@ from jx3apifun.interface_async import ApiInterfaceAsync
 from jx3apifun.model import BaseData
 
 from .caller import ApiCaller, make_request
+from .driver import WebsocketDriver
+from .event import EventModel, EventType
 
 T = TypeVar("T", bound=BaseData)
 P = ParamSpec("P")
+
+M = TypeVar("M", bound=EventModel)
 
 
 class WebsocketHandler(ApiInterfaceAsync):
@@ -43,5 +47,28 @@ class WebsocketHandler(ApiInterfaceAsync):
             model = signature.return_annotation
             caller = ApiCaller[T]()
             return await caller(request, model)
+
+        return wrapper
+
+    async def start_connect(self) -> None:
+        """
+        开启ws连接
+        """
+
+        driver = WebsocketDriver()
+        await driver.start_connect()
+
+    def register_event(self, type: EventType):
+        """
+        注册事件
+        """
+
+        def wrapper(
+            func: Callable[[EventType, M], Coroutine[Any, Any, None]],
+        ) -> Callable[[EventType, M], Coroutine[Any, Any, None]]:
+            """
+            包装器
+            """
+            return func
 
         return wrapper

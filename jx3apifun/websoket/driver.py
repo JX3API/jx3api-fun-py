@@ -71,6 +71,8 @@ class WebsocketDriver:
         """
         start connect
         """
+        if self.connected:
+            return
         self.ws = await websockets.connect(WS_RUL)
         self.connected = True
         asyncio.create_task(self.__connection_handler())
