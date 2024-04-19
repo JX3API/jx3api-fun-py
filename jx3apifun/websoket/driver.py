@@ -1,11 +1,14 @@
 import asyncio
+import json
 
 import websockets
 from websockets.client import WebSocketClientProtocol
 
-from jx3apifun.const import WS_RUL
+from jx3apifun.const import WS_RUL, WSAPI_TIMEOUT
 from jx3apifun.exceptions import TicketError, TokenError
 from jx3apifun.model import Request, Response
+
+from .store import ResultStore
 
 
 class WebsocketDriver:
@@ -17,6 +20,8 @@ class WebsocketDriver:
     """token"""
     ticket: str = ""
     """ticket"""
+    store: ResultStore = ResultStore()
+    """store object"""
     ws: WebSocketClientProtocol = WebSocketClientProtocol()
     """connection object"""
     connected: bool = False
@@ -63,9 +68,12 @@ class WebsocketDriver:
         """
         if not self.connected:
             await self.start_connect()
-
-        await self.ws.send(request.data)
-        return Response(code=200, data=[], msg="", time=0)
+        echo = self.store.get_seq()
+        data = {"action": request.url, "data": request.data, "echo": echo}
+        data_str = json.dumps(data)
+        await self.ws.send(data_str)
+        result = await self.store.fetch(echo, WSAPI_TIMEOUT)
+        return Response.model_validate(result)
 
     async def start_connect(self) -> None:
         """

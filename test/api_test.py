@@ -5,12 +5,9 @@ from pathlib import Path
 external_package_path = Path(__file__).absolute().parent.parent
 sys.path.append(str(external_package_path))
 
-from jx3apifun import get_sync_handler, set_ticket, set_token  # noqa: E402
+from jx3apifun import get_websocket_handler  # noqa: E402
 
-handler = get_sync_handler()
-set_ticket("ticket")
-set_token("token")
 
-data = handler.data_active_current()
-
-print(data)
+async def main():
+    handler = get_websocket_handler()
+    await handler.start_connect()

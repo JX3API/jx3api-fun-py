@@ -6,7 +6,6 @@ from typing import (
     cast,
 )
 
-from jx3apifun.const import API_URL
 from jx3apifun.exceptions import ResponseDataError
 from jx3apifun.model import BaseData, BaseListData, Request
 from jx3apifun.permission import is_require_ticket, is_require_token
@@ -49,6 +48,5 @@ def make_request(func_name: str, **kwargs) -> Request:
     """
     生成请求
     """
-    api_name = func_name.replace("_", "/")
-    url = API_URL + api_name
+    url = func_name.replace("_", "/")
     return Request(name=func_name, url=url, data=kwargs)
