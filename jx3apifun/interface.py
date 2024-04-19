@@ -404,7 +404,7 @@ class ApiInterface:
 
     @require_token
     @require_ticket
-    def data_match_recent(self, name: str, mode: Literal[11, 33, 55] = 33):
+    def data_match_recent(self, name: str, mode: Literal[22, 33, 55] = 33):
         """
         说明:
             角色近期战绩记录

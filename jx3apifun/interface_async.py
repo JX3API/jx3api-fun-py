@@ -1,16 +1,29 @@
+from typing import Literal
+
 from .model import (
     DataActiveCalendar,
     DataActiveCelebrity,
     DataActiveListCalendar,
     DataAllNews,
+    DataDetailed,
+    DataEquip,
     DataExamAnswer,
     DataHomeFlower,
     DataHomeFurniture,
     DataHomeTravel,
+    DataLuckAdventure,
+    DataLuckCollect,
+    DataLuckStatistical,
+    DataRoleAchievement,
+    DataRoleTeamCdList,
+    DataSchoolForce,
+    DataSchoolMatrix,
+    DataSchoolSkills,
     DataSchoolToxic,
     DataServerCheck,
     DataServerMaster,
     DataServerStatus,
+    DataTiebaRandom,
 )
 from .permission import require_ticket, require_token
 
@@ -165,5 +178,242 @@ class ApiInterfaceAsync:
 
         参数:
             * `server`: 必须的，区服名称
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    async def data_save_detailed(self, server: str, roleid: str) -> DataDetailed:
+        """
+        说明:
+            自动更新角色信息。
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `roleid`: 必须的，角色ID
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    async def data_role_detailed(self, server: str, name: str) -> DataDetailed:
+        """
+        说明:
+            角色详细信息
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，角色名称
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    async def data_school_matrix(self, name: str) -> DataSchoolMatrix:
+        """
+        说明:
+            职业阵眼效果
+
+        参数:
+            * `name`: 必须的，心法名称
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    async def data_school_force(self, name: str) -> DataSchoolForce:
+        """
+        说明:
+            奇穴详细效果
+
+        参数:
+            * `name`: 必须的，心法名称
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    async def data_school_skills(self, name: str) -> DataSchoolSkills:
+        """
+        说明:
+            技能详细效果
+
+        参数:
+            * `name`: 必须的，心法名称
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    async def data_tieba_random(
+        self,
+        subclass: Literal[
+            "818",
+            "616",
+            "鬼网三",
+            "鬼网3",
+            "树洞",
+            "记录",
+            "教程",
+            "街拍",
+            "故事",
+            "避雷",
+            "吐槽",
+            "提问",
+        ],
+        server: str = "-",
+        limit: int = 1,
+    ) -> DataTiebaRandom:
+        """
+        说明:
+            禁止轮询，随机搜索贴吧 : 818/616....
+
+        参数:
+            * `subclass`: 必须的，子类别
+            * `server`: 可选的，区服名称，查找该区服的记录
+            * `limit`: 可选的，设置返回的数量，默认值 1
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    async def data_role_attribute(self, server: str, name: str) -> DataEquip:
+        """
+        说明:
+            角色装备属性详情
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，角色名称
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    async def data_role_teamCdList(self, server: str, name: str) -> DataRoleTeamCdList:
+        """
+        说明:
+            角色副本记录
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，角色名称
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    async def data_luck_adventure(self, server: str, name: str) -> DataLuckAdventure:
+        """
+        说明:
+            角色奇遇触发记录(不保证遗漏)
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，奇遇名称，查找该奇遇的全服统计
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    async def data_luck_statistical(self, server: str, name: str) -> DataLuckStatistical:
+        """
+        说明:
+            奇遇近期触发统计
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，奇遇名称，查找该奇遇的全服统计
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    async def data_luck_server_statistical(
+        self, name: str, limit: int = 20
+    ) -> DataLuckStatistical:
+        """
+        说明:
+            统计全服近期奇遇记录，不区分区服。
+
+        参数:
+            * `name`: 必须的，奇遇名称，查找该奇遇的全服统计
+            * `limit`: 可选的，设置返回的数量，默认值 20
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    async def data_luck_collect(self, server: str, num: int = 7) -> DataLuckCollect:
+        """
+        说明:
+            统计奇遇近期触发角色记录
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `num`: 可选的，设置返回的数量，默认值 7
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    async def data_role_achievement(
+        self, server: str, role: str, name: str
+    ) -> DataRoleAchievement:
+        """
+        说明:
+            角色成就进度
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `role`: 必须的，角色名称
+            * `name`: 必须的，成就名称
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    async def data_match_recent(self, name: str, mode: Literal[22, 33, 55] = 33):
+        """
+        说明:
+            角色近期战绩记录
+
+        参数:
+            * `name`: 必须的，角色名称
+            * `mode`: 可选的，模式选择，默认值 33
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
         """
         ...

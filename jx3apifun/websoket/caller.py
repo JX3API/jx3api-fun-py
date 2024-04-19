@@ -31,6 +31,7 @@ class ApiCaller(Generic[T]):
         if is_require_ticket(request.name):
             driver.check_ticket(request)
 
+        print(f"使用ws请求: {request.name}, data: {request.data}")
         response = await driver.request(request)
         if response.code != 200:
             raise ResponseDataError(
