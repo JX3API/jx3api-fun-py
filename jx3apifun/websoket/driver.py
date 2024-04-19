@@ -1,5 +1,6 @@
 import asyncio
 import json
+from typing import cast
 
 import websockets
 from websockets.client import WebSocketClientProtocol
@@ -8,6 +9,8 @@ from jx3apifun.const import WS_RUL, WSAPI_TIMEOUT
 from jx3apifun.exceptions import TicketError, TokenError
 from jx3apifun.model import Request, Response
 
+from .collator import Collator
+from .event import EventModel, EventType
 from .store import ResultStore
 
 
@@ -22,6 +25,8 @@ class WebsocketDriver:
     """ticket"""
     store: ResultStore = ResultStore()
     """store object"""
+    collator: Collator = Collator()
+    """collator object"""
     ws: WebSocketClientProtocol = WebSocketClientProtocol()
     """connection object"""
     connected: bool = False
@@ -83,23 +88,54 @@ class WebsocketDriver:
             return
         self.ws = await websockets.connect(WS_RUL)
         self.connected = True
-        asyncio.create_task(self.__connection_handler())
+        asyncio.create_task(self.handle_connection())
 
     async def close_connect(self) -> None:
         """
-        close connection
+        关闭连接
         """
         self.connected = False
         await self.ws.close()
 
-    async def __connection_handler(self) -> None:
+    async def handle_connection(self) -> None:
         """
-        connection handler
+        处理连接
         """
         while self.connected:
             try:
-                _ = await self.ws.recv()
+                data = await self.ws.recv()
+                if isinstance(data, str):
+                    self.handle_message(data)
 
             except websockets.ConnectionClosed:
                 self.connected = False
                 break
+
+    def handle_message(self, message: str) -> None:
+        """
+        处理消息
+        """
+        data = json.loads(message)
+        if data.get("echo") is not None:
+            self.store.add_result(data)
+        else:
+            event = self.message_to_event(data)
+            self.handle_event(event)
+
+    def handle_event(self, event: EventModel) -> None:
+        """
+        处理事件
+        """
+        pass
+
+    def message_to_event(self, message: dict) -> EventModel:
+        """
+        消息转事件
+        """
+        action = message.get("action")
+        action = EventType(action)
+        data = message.get("data")
+        data = cast(dict, data)
+        data["action"] = action
+        model = self.collator.get_model(action)
+        return model.model_validate(data)

@@ -18,7 +18,7 @@ class ResultStore:
         return s
 
     def add_result(self, result: Dict[str, Any]) -> None:
-        echo = result.get("echo")
+        echo = result.pop("echo")
         echo = cast(int, echo)
         if future := self._futures.get(echo):
             future.set_result(result)
