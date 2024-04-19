@@ -11,6 +11,7 @@ from jx3apifun.model import Request, Response
 
 from .collator import Collator
 from .event import EventModel, EventType
+from .register import Register
 from .store import ResultStore
 
 
@@ -27,6 +28,8 @@ class WebsocketDriver:
     """store object"""
     collator: Collator = Collator()
     """collator object"""
+    register: Register = Register()
+    """register object"""
     ws: WebSocketClientProtocol = WebSocketClientProtocol()
     """connection object"""
     connected: bool = False
@@ -126,14 +129,17 @@ class WebsocketDriver:
         """
         处理事件
         """
-        pass
+        asyncio.create_task(self.register.run_handler(event))
 
     def message_to_event(self, message: dict) -> EventModel:
         """
         消息转事件
         """
         action = message.get("action")
-        action = EventType(action)
+        try:
+            action = EventType(action)
+        except ValueError:
+            action = EventType.All
         data = message.get("data")
         data = cast(dict, data)
         data["action"] = action

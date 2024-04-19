@@ -8,6 +8,7 @@ from jx3apifun.model import BaseData
 from .caller import ApiCaller, make_request
 from .driver import WebsocketDriver
 from .event import EventModel, EventType
+from .register import Register
 
 T = TypeVar("T", bound=BaseData)
 P = ParamSpec("P")
@@ -77,6 +78,8 @@ class WebsocketHandler(ApiInterfaceAsync):
             """
             包装器
             """
+            register = Register()
+            register.register(type, func)
             return func
 
         return wrapper
