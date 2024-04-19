@@ -1,5 +1,5 @@
 # Jx3api for fun
-一款女生自用的jx3api sdk，本仓库主要是为了整活儿，正经使用应该选择受姐姐的[jx3api]([JX3API/jx3api-py: JX3API Python SDK (github.com)](https://github.com/JX3API/jx3api-py))。
+一款女生自用的jx3api sdk，本仓库主要是为了整活儿，正经使用应该选择受姐姐的[jx3api](https://github.com/JX3API/jx3api-py)。
 
 ## 安装
 
@@ -29,9 +29,9 @@ set_ticket("ticket")
 ### 同步接口
 
 ```python
-from jx3apifun import get_synchandler
+from jx3apifun import get_sync_handler
 
-handler = get_synchandler()
+handler = get_sync_handler()
 
 handler.active_calendar(server="梦江南")
 ```
@@ -39,9 +39,9 @@ handler.active_calendar(server="梦江南")
 ### 异步接口
 
 ```python
-from jx3apifun import get_asynchandler
+from jx3apifun import get_async_handler
 
-handler = get_asynchandler()
+handler = get_async_handler()
 
 await handler.active_calendar(server="梦江南")
 ```
@@ -51,9 +51,9 @@ await handler.active_calendar(server="梦江南")
 注意事项：还没写（
 
 ```python
-from jx3apifun import get_websockethandler
+from jx3apifun import get_websocket_handler
 
-handler = get_websokethandler()
+handler = get_websocket_handler()
 
 还没写
 ```
