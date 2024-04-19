@@ -6,11 +6,11 @@ from typing import (
     cast,
 )
 
+from jx3apifun.const import API_URL
 from jx3apifun.exceptions import ResponseDataError
 from jx3apifun.model import BaseData, BaseListData, Request
 from jx3apifun.permission import is_require_ticket, is_require_token
 
-from .const import BASE_URL
 from .driver import AsyncDriver, SyncDriver
 
 T = TypeVar("T", bound=BaseData)
@@ -72,5 +72,5 @@ def make_request(func_name: str, **kwargs) -> Request:
     生成请求
     """
     api_name = func_name.replace("_", "/")
-    url = BASE_URL + api_name
+    url = API_URL + api_name
     return Request(name=func_name, url=url, data=kwargs)

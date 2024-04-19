@@ -19,7 +19,6 @@ class SyncDriver:
     def __new__(cls) -> "SyncDriver":
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
-            cls._instance.__init__()
         return cls._instance
 
     def set_token(self, token: str) -> None:
@@ -82,7 +81,6 @@ class AsyncDriver:
     def __new__(cls) -> "AsyncDriver":
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
-            cls._instance.__init__()
         return cls._instance
 
     def set_token(self, token: str) -> None:
