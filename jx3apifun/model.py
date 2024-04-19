@@ -321,3 +321,550 @@ class DataServerStatus(BaseData):
     """服务器"""
     status: str
     """状态"""
+
+
+class DataDetailed(BaseData):
+    """
+    更新角色信息
+    """
+
+    zoneName: str
+    """区服名称"""
+    serverName: str
+    """服务器名称"""
+    roleName: str
+    """角色名称"""
+    roleId: str
+    """角色id"""
+    globalRoleId: str
+    """全局角色id"""
+    forceName: str
+    """门派名称"""
+    forceId: str
+    """门派id"""
+    bodyName: str
+    """体型名称"""
+    bodyId: str
+    """体型id"""
+    tongName: Optional[str] = None
+    """帮派名称"""
+    tongId: Optional[str] = None
+    """帮派id"""
+    campName: str
+    """阵营名称"""
+    campId: str
+    """阵营id"""
+    personName: str
+    """人物名称"""
+    personId: str
+    """人物id"""
+    personAvatar: str
+    """人物头像"""
+
+
+class OneSchoolMatrixDescs(BaseModel):
+    """
+    单个职业阵眼描述
+    """
+
+    desc: str
+    """描述"""
+    level: int
+    """等级"""
+    name: str
+    """名称"""
+
+
+class DataSchoolMatrix(BaseData):
+    """
+    职业阵眼效果
+    """
+
+    name: str
+    """名称"""
+    skillName: str
+    """阵法名称"""
+    descs: list[OneSchoolMatrixDescs]
+    """描述列表"""
+
+
+class OneDataSchoolForceData(BaseModel):
+    """
+    单个奇穴数据
+    """
+
+    name: str
+    """名称"""
+    type: int = Field(alias="class")
+    """分类"""
+    desc: str
+    """描述"""
+    icon: str
+    """图标"""
+    kind: str
+    """类型"""
+    subKind: str
+    """子类型"""
+
+
+class OneDataSchoolForce(BaseModel):
+    """
+    单个门派奇穴
+    """
+
+    level: int
+    """等级"""
+    data: list[OneDataSchoolForceData]
+    """数据"""
+
+
+class DataSchoolForce(BaseListData):
+    """
+    门派奇穴
+    """
+
+    items: list[OneDataSchoolForce]
+    """奇穴列表"""
+
+
+class OneDataSchoolSkills(BaseModel):
+    """
+    单个门派技能
+    """
+
+    name: str
+    """名称"""
+    simpleDesc: str
+    """简单描述"""
+    desc: str
+    """描述"""
+    specialDesc: str
+    """特殊描述"""
+    interval: str
+    """间隔"""
+    consumption: str
+    """消耗"""
+    distance: str
+    """距离"""
+    icon: str
+    """图标"""
+    kind: str
+    """类型"""
+    subKind: str
+    """子类型"""
+    releaseType: str
+    """释放类型"""
+    weapon: str
+    """武器"""
+
+
+class DataSchoolSkills(BaseListData):
+    """
+    门派技能
+    """
+
+    items: list[OneDataSchoolSkills]
+    """技能列表"""
+
+
+class OneDataTiebaRandom(BaseModel):
+    """
+    贴吧帖子
+    """
+
+    id: int
+    """id"""
+    subclass: str
+    """子类别"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    title: str
+    """标题"""
+    url: int
+    """链接"""
+    date: str
+    """日期"""
+
+
+class DataTiebaRandom(BaseListData):
+    """
+    贴吧帖子列表
+    """
+
+    items: list[OneDataTiebaRandom]
+    """帖子列表"""
+
+
+class OneFiveStone(BaseModel):
+    """
+    五行石数据
+    """
+
+    name: str
+    """名称"""
+    level: str
+    """等级"""
+    max: str
+    """最大值"""
+    min: str
+    """最小值"""
+    icon: str
+    """图标"""
+    kind: str
+    """类型"""
+    subKind: str
+    """子类型"""
+    desc: str
+    """描述"""
+    percent: bool
+    """百分比"""
+
+
+class OneColorStoneAttr(BaseModel):
+    """
+    五彩石属性
+    """
+
+    max: str
+    """最大值"""
+    min: str
+    """最小值"""
+    desc: str
+    """描述"""
+    percent: bool
+    """百分比"""
+
+
+class ColorStone(BaseModel):
+    """
+    五彩石数据
+    """
+
+    id: str
+    """id"""
+    name: str
+    """名称"""
+    type: str = Field(alias="class")
+    """分类"""
+    level: str
+    """等级"""
+    icon: str
+    """图标"""
+    kind: str
+    """类型"""
+    subKind: str
+    """子类型"""
+    attribute: list[OneColorStoneAttr]
+    """属性"""
+
+
+class OneModifyType(BaseModel):
+    """
+    属性类型
+    """
+
+    name: str
+    """名称"""
+    max: str
+    """最大值"""
+    min: str
+    """最小值"""
+    desc: str
+    """描述"""
+    percent: bool
+    """百分比"""
+
+
+class OnePerManentEnchantAttri(BaseModel):
+    """
+    附魔属性
+    """
+
+    desc: str
+    """描述"""
+
+
+class OnePerManentEnchant(BaseModel):
+    """
+    附魔数据
+    """
+
+    id: str
+    """id"""
+    name: str
+    """名称"""
+    level: str
+    """等级"""
+    icon: str
+    """图标"""
+    attrib: list[OnePerManentEnchantAttri]
+    """属性"""
+
+
+class BaseTypeAttri(BaseModel):
+    """
+    基础属性
+    """
+
+    GeneratedBase: str
+    """基础属性"""
+    GeneratedMagic: str
+    """魔法属性"""
+    HorseBase: str
+    """坐骑属性"""
+    HorseMagic: str
+    """坐骑魔法属性"""
+    Type: str
+    """类型"""
+    percent: bool
+    """百分比"""
+
+
+class Base1Type(BaseModel):
+    """
+    基础属性
+    """
+
+    Attrib: BaseTypeAttri
+    """属性"""
+    Base1Max: str
+    """最大值"""
+    Base1Min: str
+    """最小值"""
+    Desc: str
+    """描述"""
+
+
+class Base2Type(BaseModel):
+    """
+    基础属性
+    """
+
+    Attrib: BaseTypeAttri
+    """属性"""
+    Base2Max: str
+    """最大值"""
+    Base2Min: str
+    """最小值"""
+    Desc: str
+    """描述"""
+
+
+class OneEquip(BaseModel):
+    """
+    装备数据
+    """
+
+    name: str
+    """名称"""
+    type: str = Field(alias="class")
+    """分类"""
+    icon: str
+    """图标"""
+    kind: str
+    """类型"""
+    subKind: str
+    """子类型"""
+    quality: str
+    """品质"""
+    strengthLevel: str
+    """强化等级"""
+    maxStrengthLevel: str
+    """最大强化等级"""
+    color: str
+    """颜色"""
+    desc: str
+    """描述"""
+    source: Optional[str] = None
+    """来源"""
+    fiveStone: list[OneFiveStone]
+    """五行石"""
+    colorStone: ColorStone
+    """五彩石"""
+    modifyType: list[OneModifyType]
+    """属性"""
+    permanentEnchant: list[OnePerManentEnchant]
+    """附魔"""
+    Base1Type: Base1Type
+    """基础属性1"""
+    Base2Type: Base2Type
+    """基础属性2"""
+
+
+class DataEquip(BaseListData):
+    """
+    装备数据
+    """
+
+    items: list[OneEquip]
+    """装备列表"""
+
+
+class BossProgress(BaseModel):
+    """
+    Boss进度
+    """
+
+    finished: bool
+    """是否完成"""
+    icon: str
+    """图标"""
+    index: str
+    """序号"""
+    name: str
+    """名称"""
+    progressId: str
+    """进度id"""
+
+
+class OneTeamMapData(BaseModel):
+    """
+    单个副本数据
+    """
+
+    mapIcon: str
+    """地图图标"""
+    mapId: str
+    """地图id"""
+    mapName: str
+    """地图名称"""
+    mapType: str
+    """地图类型"""
+    bossCount: int
+    """Boss数量"""
+    bossFinished: int
+    """Boss完成数量"""
+    bossProgress: list[BossProgress]
+    """Boss进度"""
+
+
+class DataRoleTeamCdList(DataDetailed):
+    """
+    角色副本CD列表
+    """
+
+    data: list[OneTeamMapData]
+    """副本数据"""
+
+
+class DataLuckAdventure(BaseData):
+    """
+    角色奇遇触发记录(不保证遗漏)
+    """
+
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    event: str
+    """奇遇名"""
+    level: int
+    """等级"""
+    status: int
+    """状态"""
+    time: int
+    """时间"""
+
+
+class DataLuckStatistical(BaseListData):
+    """
+    奇遇近期触发统计
+    """
+
+    items: list[DataLuckAdventure]
+    """奇遇列表"""
+
+
+class DataLuckCollectData(BaseModel):
+    """
+    奇遇汇总数据
+    """
+
+    name: str
+    """触发人"""
+    time: int
+    """触发时间"""
+
+
+class OneDataLuckCollect(BaseModel):
+    """
+    单个奇遇汇总
+    """
+
+    server: str
+    """服务器"""
+    event: str
+    """奇遇名"""
+    count: int
+    """数量"""
+    data: DataLuckCollectData
+    """数据"""
+
+
+class DataLuckCollect(BaseListData):
+    """
+    奇遇汇总
+    """
+
+    items: list[OneDataLuckCollect]
+    """奇遇列表"""
+
+
+class DataRoleAchievementData(BaseModel):
+    """
+    角色成就数据
+    """
+
+    id: int
+    """id"""
+    icon: str
+    """图标"""
+    likes: int
+    """点赞数"""
+    name: str
+    """奇遇名称"""
+    upClass: str = Field(alias="class")
+    """类型"""
+    subClass: str
+    """子类型"""
+    desc: str
+    """描述"""
+    detail: str
+    """详情"""
+    maps: list
+    """地图"""
+    isFinished: bool
+    """是否完成"""
+    isFav: bool
+    """是否收藏"""
+    type: str
+    """类型"""
+    currentValue: int
+    """当前值"""
+    triggerValue: int
+    """触发值"""
+    subset: list
+    """子集"""
+    rewardItem: Optional[str] = None
+    """奖励物品"""
+    rewardPoint: int
+    """奖励点数"""
+    rewardPrefix: str
+    """奖励前缀"""
+    rewardSuffix: str
+    """奖励后缀"""
+
+
+class DataRoleAchievement(DataDetailed):
+    """
+    角色成就进度
+    """
+
+    data: list[DataRoleAchievementData]
+    """成就列表"""
