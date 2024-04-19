@@ -1,11 +1,13 @@
 from enum import Enum
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class EventType(Enum):
     """事件类型"""
 
+    All = 0
+    """全部事件"""
     Welcome = 1000
     """欢迎消息"""
     Qiyu = 1001
@@ -74,7 +76,9 @@ class EventModel(BaseModel):
     事件数据模型
     """
 
-    ...
+    model_config = ConfigDict(extra="allow")
+    action: EventType = EventType.All
+    """事件类型"""
 
 
 class EventWelcome(EventModel):

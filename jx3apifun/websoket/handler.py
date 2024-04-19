@@ -64,8 +64,8 @@ class WebsocketHandler(ApiInterfaceAsync):
         """
 
         def wrapper(
-            func: Callable[[EventType, M], Coroutine[Any, Any, None]],
-        ) -> Callable[[EventType, M], Coroutine[Any, Any, None]]:
+            func: Callable[[M], Coroutine[Any, Any, None]],
+        ) -> Callable[[M], Coroutine[Any, Any, None]]:
             """
             包装器
             """
