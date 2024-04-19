@@ -1,7 +1,11 @@
+import asyncio
+
 import websockets
 from websockets.client import WebSocketClientProtocol
 
 from jx3apifun.const import WS_RUL
+from jx3apifun.exceptions import TicketError, TokenError
+from jx3apifun.model import Request, Response
 
 
 class WebsocketDriver:
@@ -35,12 +39,41 @@ class WebsocketDriver:
         """
         self.ticket = ticket
 
+    def check_token(self, request: Request) -> Request:
+        """
+        检查token
+        """
+        if self.token == "":
+            raise TokenError
+        request.data["token"] = self.token
+        return request
+
+    def check_ticket(self, request: Request) -> Request:
+        """
+        检查ticket
+        """
+        if self.ticket == "":
+            raise TicketError
+        request.data["ticket"] = self.ticket
+        return request
+
+    async def request(self, request: Request) -> Response:
+        """
+        send request
+        """
+        if not self.connected:
+            await self.start_connect()
+
+        await self.ws.send(request.data)
+        return Response(code=200, data=[], msg="", time=0)
+
     async def start_connect(self) -> None:
         """
         start connect
         """
         self.ws = await websockets.connect(WS_RUL)
         self.connected = True
+        asyncio.create_task(self.__connection_handler())
 
     async def close(self) -> None:
         """
@@ -49,7 +82,7 @@ class WebsocketDriver:
         self.connected = False
         await self.ws.close()
 
-    async def connection_handler(self) -> None:
+    async def __connection_handler(self) -> None:
         """
         connection handler
         """
