@@ -33,9 +33,12 @@ class Register(Generic[T]):
         """
         运行事件
         """
+        if event.action == EventType.All:
+            # TODO: 未知事件处理
+            print(f"未知事件: {event}")
+            return
         try:
-            if event.action in self.handler_map:
-                await self.run_handler_simple(event)
+            await self.run_handler_simple(event)
             await self.run_handler_all(event)
         except Exception as e:
             print(e)
