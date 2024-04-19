@@ -77,7 +77,7 @@ class WebsocketDriver:
         self.connected = True
         asyncio.create_task(self.__connection_handler())
 
-    async def close(self) -> None:
+    async def close_connect(self) -> None:
         """
         close connection
         """

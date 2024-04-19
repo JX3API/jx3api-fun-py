@@ -58,6 +58,14 @@ class WebsocketHandler(ApiInterfaceAsync):
         driver = WebsocketDriver()
         await driver.start_connect()
 
+    async def close_connect(self) -> None:
+        """
+        关闭ws连接
+        """
+
+        driver = WebsocketDriver()
+        await driver.close_connect()
+
     def register_event(self, type: EventType):
         """
         注册事件
