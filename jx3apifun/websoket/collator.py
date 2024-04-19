@@ -17,7 +17,8 @@ class Collator:
             if inspect.isclass(obj) and issubclass(obj, event.EventModel):
                 if obj == event.EventModel:
                     continue
-                self.model_map[obj.action] = obj
+                action = obj.model_fields["action"]
+                self.model_map[action.default] = obj
 
     def get_model(self, action: event.EventType) -> Type[event.EventModel]:
         """

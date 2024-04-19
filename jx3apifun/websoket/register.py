@@ -47,12 +47,12 @@ class Register(Generic[T]):
         """
         对于单个事件运行
         """
-        if coros := [func(event) for func in self.handler_map[event.action]]:
+        if coros := [func(event) for func in self.handler_map.get(event.action, [])]:
             await asyncio.gather(*coros)
 
     async def run_handler_all(self, event: EventModel) -> None:
         """
         对于所有事件运行
         """
-        if coros := [func(event) for func in self.handler_map[EventType.All]]:
+        if coros := [func(event) for func in self.handler_map.get(EventType.All, [])]:
             await asyncio.gather(*coros)

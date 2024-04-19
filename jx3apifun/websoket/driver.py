@@ -107,6 +107,7 @@ class WebsocketDriver:
         while self.connected:
             try:
                 data = await self.ws.recv()
+                print(f"收到ws消息: {data}")
                 if isinstance(data, str):
                     self.handle_message(data)
 
@@ -140,7 +141,10 @@ class WebsocketDriver:
             action = EventType(action)
         except ValueError:
             action = EventType.All
-        data = message.get("data")
+        if action == EventType.Welcome:
+            data = {"message": message.get("message")}
+        else:
+            data = message.get("data")
         data = cast(dict, data)
         data["action"] = action
         model = self.collator.get_model(action)

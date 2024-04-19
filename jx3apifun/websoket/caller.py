@@ -32,6 +32,10 @@ class ApiCaller(Generic[T]):
             driver.check_ticket(request)
 
         response = await driver.request(request)
+        if response.code != 200:
+            raise ResponseDataError(
+                f"请求失败，code: {response.code}, msg: {response.msg}"
+            )
         data = response.data
         if isinstance(data, dict):
             return model.model_validate(data)
@@ -41,7 +45,7 @@ class ApiCaller(Generic[T]):
             instance = list_model(items=data)
             return cast(T, instance)
 
-        raise ResponseDataError
+        raise ResponseDataError(f"返回数据类型错误: {data}")
 
 
 def make_request(func_name: str, **kwargs) -> Request:

@@ -8,7 +8,7 @@ class EventType(Enum):
 
     All = 0
     """全部事件"""
-    Welcome = 1000
+    Welcome = 10000
     """欢迎消息"""
     Qiyu = 1001
     """奇遇报时"""
@@ -62,15 +62,6 @@ class EventType(Enum):
     """云从预告"""
 
 
-class EventMsg(BaseModel):
-    """事件消息"""
-
-    action: int
-    """事件类型"""
-    data: dict
-    """事件数据"""
-
-
 class EventModel(BaseModel):
     """
     事件数据模型
@@ -88,6 +79,8 @@ class EventWelcome(EventModel):
 
     action: EventType = EventType.Welcome
     """事件类型"""
+    message: str
+    """消息"""
 
 
 class EventQiyu(EventModel):
