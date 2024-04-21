@@ -16,14 +16,15 @@ class Register(Generic[T]):
     事件注册器
     """
 
-    logger: LoggerProtocol
+    logger: LoggerProtocol = AbsLogger()
     """logger"""
-    handler_map: dict[EventType, list[Callable[[T], Coroutine[Any, Any, None]]]]
+    handler_map: dict[EventType, list[Callable[[T], Coroutine[Any, Any, None]]]] = {}
     """handler map"""
 
-    def __init__(self) -> None:
-        self.logger = AbsLogger()
-        self.handler_map = {}
+    def __new__(cls) -> "Register":
+        if not hasattr(cls, "_instance"):
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
     def set_logger(self, logger: LoggerProtocol) -> None:
         """
