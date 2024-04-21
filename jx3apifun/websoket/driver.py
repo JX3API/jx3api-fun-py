@@ -31,6 +31,8 @@ class WebsocketDriver:
     """token"""
     ticket: str = ""
     """ticket"""
+    ws_token: str = ""
+    """ws token"""
     store: ResultStore = ResultStore()
     """store object"""
     collator: Collator = Collator()
@@ -50,6 +52,12 @@ class WebsocketDriver:
         set logger
         """
         self.logger = logger
+
+    def set_ws_token(self, ws_token: str) -> None:
+        """
+        set ws token
+        """
+        self.ws_token = ws_token
 
     def set_token(self, token: str) -> None:
         """
@@ -100,7 +108,9 @@ class WebsocketDriver:
         """
         if self.connected:
             return
-        self.ws = await websockets.connect(WS_RUL, extra_headers={"token": self.token})
+        self.ws = await websockets.connect(
+            WS_RUL, extra_headers={"token": self.ws_token}
+        )
         self.logger.info("ws连接成功...")
         self.connected = True
         asyncio.create_task(self.handle_connection())

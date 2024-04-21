@@ -28,11 +28,14 @@ pip install --no-cache -U git+https://github.com/JX3API/jx3api-fun-py.git
 
 ### 初始化（设置token和ticket）
 
-```python
-from jx3apifun import set_token, set_ticket
+token和ticket不是必须的，但是访问高级服务需要
 
-set_token("token")
-set_ticket("ticket")
+```python
+from jx3apifun import set_token, set_ticket, set_ws_token
+
+set_token("token")       # 设置api访问的token
+set_ticket("ticket")     # 设置推蓝ticket
+set_ws_token("ws token") # 设置websocket服务的token
 ```
 
 ### 同步接口

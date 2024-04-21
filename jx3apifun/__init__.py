@@ -53,6 +53,13 @@ def set_token(token: str) -> None:
     api_instance.set_token(token)
 
 
+def set_ws_token(token: str) -> None:
+    """
+    设置ws token
+    """
+    api_instance.set_ws_token(token)
+
+
 def logger_wrapper(logger: Any) -> LoggerProtocol:
     """
     说明:

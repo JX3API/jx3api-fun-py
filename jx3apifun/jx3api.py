@@ -54,3 +54,9 @@ class Jx3Api:
         self.sync_driver.set_token(token)
         self.async_driver.set_token(token)
         self.websocket_driver.set_token(token)
+
+    def set_ws_token(self, token: str) -> None:
+        """
+        设置ws token
+        """
+        self.websocket_driver.set_ws_token(token)
