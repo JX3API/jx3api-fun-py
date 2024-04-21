@@ -26,6 +26,19 @@ pip install --no-cache -U git+https://github.com/JX3API/jx3api-fun-py.git
 
 ## 使用说明
 
+sdk的函数名和`jx3api`的入口对应，将`/`转换成`_`即可，比如：
+
+- 活动日历的接口是：`data/active/calendar`
+- 则使用sdk的函数接口是：`handler.data_active_calendar()`
+- 参数也和网站对应
+
+**注意** 
+
+部分返回值的字段和python不兼容，做了以下处理：
+
+- 返回字段为 `class` 的，均替换成 `type`
+- 中文字段，做了特殊转换
+
 ### 初始化（设置token和ticket）
 
 token和ticket不是必须的，但是访问高级服务需要
