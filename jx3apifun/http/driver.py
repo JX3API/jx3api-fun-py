@@ -67,7 +67,7 @@ class SyncDriver:
         try:
             response = self.client.post(request.url, data=request.data)
             if response.status_code != 200:
-                raise NetworkError
+                raise NetworkError("网络请求错误")
 
             return Response.model_validate(response.json())
 
@@ -117,7 +117,7 @@ class AsyncDriver:
         检查token
         """
         if self.token == "":
-            raise TokenError
+            raise TokenError("token为空")
         request.data["token"] = self.token
         return request
 
@@ -126,7 +126,7 @@ class AsyncDriver:
         检查ticket
         """
         if self.ticket == "":
-            raise TicketError
+            raise TicketError("ticket为空")
         request.data["ticket"] = self.ticket
         return request
 
@@ -138,7 +138,7 @@ class AsyncDriver:
         try:
             response = await self.client.post(request.url, data=request.data)
             if response.status_code != 200:
-                raise NetworkError
+                raise NetworkError("网络请求错误")
 
             return Response.model_validate(response.json())
 

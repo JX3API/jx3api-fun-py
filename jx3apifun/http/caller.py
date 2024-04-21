@@ -42,7 +42,7 @@ class ApiCaller(Generic[T]):
             instance = list_model(items=data)
             return cast(T, instance)
 
-        raise ResponseDataError
+        raise ResponseDataError("返回数据格式错误")
 
     def call_api_sync(self, request: Request, model: Type[T]) -> T:
         """
@@ -64,7 +64,7 @@ class ApiCaller(Generic[T]):
             instance = list_model(items=data)
             return cast(T, instance)
 
-        raise ResponseDataError
+        raise ResponseDataError("返回数据格式错误")
 
 
 def make_request(func_name: str, **kwargs) -> Request:

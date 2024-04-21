@@ -68,7 +68,7 @@ class WebsocketDriver:
         检查token
         """
         if self.token == "":
-            raise TokenError
+            raise TokenError("token 为空")
         request.data["token"] = self.token
         return request
 
@@ -77,7 +77,7 @@ class WebsocketDriver:
         检查ticket
         """
         if self.ticket == "":
-            raise TicketError
+            raise TicketError("ticket 为空")
         request.data["ticket"] = self.ticket
         return request
 
