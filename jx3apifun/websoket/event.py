@@ -28,13 +28,11 @@ class EventType(Enum):
     """追魂点名"""
     ZhuEr = 1009
     """诸恶事件"""
-    DiluStart = 1010
-    """的卢消息"""
-    DiluFresh = 1011
+    DiluFresh = 1010
     """的卢刷新"""
-    DiluEnd = 1012
+    DiluEnd = 1011
     """的卢捕获"""
-    DiluJingPai = 1013
+    DiluJingPai = 1012
     """的卢竞拍"""
     Liangcang = 1101
     """粮仓被劫"""
@@ -237,6 +235,8 @@ class EventZhuihun(EventModel):
     """子服务器"""
     name: str
     """角色名"""
+    realm: str
+    """跨服名"""
     time: int
     """时间戳"""
 
@@ -254,23 +254,6 @@ class EventZhuEr(EventModel):
     """服务器"""
     map_name: str
     """地图名"""
-    time: int
-    """时间戳"""
-
-
-class EventDiluStart(EventModel):
-    """
-    的卢报时
-    """
-
-    action: EventType = EventType.DiluStart
-    """事件类型"""
-    zone: str
-    """区服"""
-    server: str
-    """服务器"""
-    name: str
-    """的卢名"""
     time: int
     """时间戳"""
 
