@@ -868,3 +868,556 @@ class DataRoleAchievement(DataDetailed):
 
     data: list[DataRoleAchievementData]
     """成就列表"""
+
+
+class OneDataMatchPerformance(BaseModel):
+    """
+    战绩表现
+    """
+
+    mmr: int
+    """MMR"""
+    grade: int
+    """评分"""
+    ranking: str
+    """排名"""
+    winCount: int
+    """胜场"""
+    totalCount: int
+    """总场次"""
+    mvpCount: int
+    """MVP次数"""
+    pvpType: str
+    """PVP类型"""
+    winRate: int
+    """胜率"""
+
+
+class DataMatchPerformance(BaseModel):
+    """
+    战绩表现
+    """
+
+    match22: Optional[OneDataMatchPerformance] = Field(alias="2v2", default=None)
+    """2v2表现"""
+    match33: Optional[OneDataMatchPerformance] = Field(alias="3v3", default=None)
+    """3v3表现"""
+    match55: Optional[OneDataMatchPerformance] = Field(alias="5v5", default=None)
+    """5v5表现"""
+
+
+class DataMatchHistory(BaseModel):
+    """
+    战绩历史
+    """
+
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    avgGrade: int
+    """平均评分"""
+    totalMmr: int
+    """总MMR"""
+    mmr: int
+    """MMR"""
+    kungfu: str
+    """心法"""
+    pvpType: int
+    """PVP类型"""
+    won: bool
+    """是否胜利"""
+    mvp: bool
+    """是否MVP"""
+    startTime: int
+    """开始时间"""
+    endTime: int
+    """结束时间"""
+
+
+class DataMatchTrend(BaseModel):
+    """
+    战绩走势
+    """
+
+    matchDate: int
+    """比赛日期"""
+    mmr: int
+    """MMR"""
+    winRate: float
+    """胜率"""
+
+
+class DataMatchRecent(DataDetailed):
+    """
+    角色近期战绩记录
+    """
+
+    performance: DataMatchPerformance
+    """战绩表现"""
+    history: list[DataMatchHistory]
+    """战绩历史"""
+    trend: list[DataMatchTrend]
+    """战绩走势"""
+
+
+class DataMatchAwesome(BaseData):
+    """
+    名剑排行
+    """
+
+    zoneName: str
+    """区服名称"""
+    serverName: str
+    """服务器名称"""
+    roleName: str
+    """角色名称"""
+    forceName: str
+    """门派名称"""
+    avatarUrl: str
+    """头像链接"""
+    rankNum: str
+    """排名"""
+    score: str
+    """分数"""
+    upNum: str
+    """上升名次"""
+    winRate: str
+    """胜率"""
+
+
+class OneDataMatchSchools(BaseModel):
+    """
+    名剑统计
+    """
+
+    name: str
+    """门派名称"""
+    this: int
+    """当前排名"""
+    last: int
+    """上次排名"""
+
+
+class DataMatchSchools(BaseListData):
+    """
+    比赛统计门派数据
+    """
+
+    items: list[OneDataMatchSchools]
+    """门派列表"""
+
+
+class OneDataMemberRecruit(BaseModel):
+    """
+    团队招募信息
+    """
+
+    crossServer: bool
+    """是否跨服"""
+    activityId: int
+    """活动id"""
+    activity: str
+    """活动名"""
+    level: int
+    """等级"""
+    leader: str
+    """团长"""
+    pushId: int
+    """推送id"""
+    roomID: str
+    """房间id"""
+    roleId: int
+    """角色id"""
+    createTime: int
+    """创建时间"""
+    number: int
+    """当前人数"""
+    maxNumber: int
+    """最大人数"""
+    label: list[str]
+    """标签"""
+    content: str
+    """内容"""
+
+
+class DataMemberRecruit(BaseListData):
+    """
+    团队招募信息
+    """
+
+    items: list[OneDataMemberRecruit]
+    """招募列表"""
+
+
+class OneDataMember(BaseModel):
+    """
+    师父列表数据
+    """
+
+    roleId: int
+    """角色id"""
+    roleName: str
+    """角色名"""
+    roleLevel: int
+    """角色等级"""
+    campName: str
+    """阵营名"""
+    tongName: Optional[str] = None
+    """帮派名"""
+    tongMasterName: Optional[str] = None
+    """帮主名"""
+    bodyId: int
+    """体型id"""
+    bodyName: str
+    """体型名"""
+    forceId: int
+    """门派id"""
+    forceName: str
+    """门派名"""
+    comment: str
+    """宣言"""
+    time: int
+    """时间"""
+
+
+class DataMember(BaseListData):
+    """
+    师徒列表数据
+    """
+
+    items: list[OneDataMember]
+    """师徒列表"""
+
+
+class OneDataServerSand(BaseModel):
+    """
+    服务器沙盘数据
+    """
+
+    tongId: int
+    """帮派id"""
+    tongName: str
+    """帮派名"""
+    castleId: int
+    """城池id"""
+    castleName: str
+    """城池名"""
+    masterId: int
+    """帮主id"""
+    masterName: str
+    """帮主名"""
+    campId: int
+    """阵营id"""
+    campName: str
+    """阵营名"""
+
+
+class DataServerSand(BaseData):
+    """
+    服务器沙盘数据
+    """
+
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    reset: int
+    """重置时间"""
+    update: int
+    """更新时间"""
+    data: list[OneDataServerSand]
+    """沙盘数据"""
+
+
+class OneDataServerEvent(BaseModel):
+    """
+    全服阵营大事件
+    """
+
+    id: int
+    """id"""
+    camp_name: str
+    """阵营名"""
+    fenxian_zone_name: str
+    """分线区服名"""
+    fenxian_server_name: str
+    """分线服务器名"""
+    friend_zone_name: str
+    """友方区服名"""
+    friend_server_name: str
+    """友方服务器名"""
+    role_name: str
+    """角色名"""
+    add_time: int
+    """添加时间"""
+
+
+class DataServerEvent(BaseListData):
+    """
+    全服阵营大事件
+    """
+
+    items: list[OneDataServerEvent]
+    """事件列表"""
+
+
+class OneDataTradeDemon(BaseModel):
+    """
+    金价比例数据
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    tieba: str
+    """贴吧数据"""
+    wanbaolou: str
+    """万宝楼数据"""
+    dd373: str
+    """373数据"""
+    uu898: str
+    """898数据"""
+    from_5173: str = Field(alias="5173")
+    """5173数据"""
+    from_7881: str = Field(alias="7881")
+    """7881数据"""
+    time: int
+    """时间"""
+    date: str
+    """日期"""
+
+
+class DataTradeDemon(BaseListData):
+    """
+    金价比例数据
+    """
+
+    items: list[OneDataTradeDemon]
+    """比例列表"""
+
+
+class OneDataTieBaItemRecords(BaseModel):
+    """
+    贴吧物品记录
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    url: int
+    """帖子链接"""
+    context: str
+    """内容"""
+    reply: int
+    """回复数"""
+    token: str
+    """token"""
+    floor: int
+    """楼层"""
+    time: int
+    """时间"""
+
+
+class DataTieBaItemRecords(BaseListData):
+    """
+    贴吧物品记录
+    """
+
+    items: list[OneDataTieBaItemRecords]
+    """记录列表"""
+
+
+class OneDataValuablesStatistical(BaseModel):
+    """
+    物品统计
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    role_name: str
+    """角色名"""
+    map_name: str
+    """地图名"""
+    time: int
+    """时间"""
+
+
+class DataValuablesStatistical(BaseListData):
+    """
+    物品统计
+    """
+
+    items: list[OneDataValuablesStatistical]
+    """统计列表"""
+
+
+class OneDataValuablesCollect(BaseModel):
+    """
+    掉落汇总数据
+    """
+
+    name: str
+    """名称"""
+    count: int
+    """数量"""
+    data: OneDataValuablesStatistical
+    """数据"""
+
+
+class DataValuablesCollect(BaseListData):
+    """
+    掉落汇总
+    """
+
+    items: list[OneDataValuablesCollect]
+    """汇总列表"""
+
+
+class OneDataServerAntivice(BaseModel):
+    """
+    诛恶事件数据
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    map_name: str
+    """地图名"""
+    time: int
+    """时间"""
+
+
+class DataServerAntivice(BaseListData):
+    """
+    诛恶事件数据
+    """
+
+    items: list[OneDataServerAntivice]
+    """事件列表"""
+
+
+class OneDataRankStatistical(BaseModel):
+    """
+    风云榜单数据
+    """
+
+    id: int
+    """id"""
+    type: str = Field(alias="class")
+    """类型"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    school: str
+    """门派"""
+    index: int
+    """排名"""
+    level: int
+    """等级"""
+    camp_name: str
+    """阵营"""
+    tong_name: Optional[str] = None
+    """帮派"""
+    score: int
+    """分数"""
+    datetime: str
+    """时间"""
+
+
+class DataRankStatistical(BaseListData):
+    """
+    风云榜单数据
+    """
+
+    items: list[OneDataRankStatistical]
+    """榜单列表"""
+
+
+class OneDataSchoolRankStatistical(BaseModel):
+    """
+    资历榜单数据
+    """
+
+    name: str
+    """名称"""
+    role: str
+    """角色"""
+    school: str
+    """门派"""
+    server: str
+    """服务器"""
+    zone: str
+    """区服"""
+    value: int
+    """值"""
+    avatar: str
+    """头像"""
+
+
+class DataSchoolRankStatistical(BaseListData):
+    """
+    资历榜单数据
+    """
+
+    items: list[OneDataSchoolRankStatistical]
+    """榜单列表"""
+
+
+class OneDataDuowanStatistical(BaseModel):
+    """
+    单个频道数据
+    """
+
+    campName: str
+    """阵营名"""
+    sid: int
+    """sid"""
+    logoUrl: str
+    """logoUrl"""
+    users: int
+    """用户数"""
+    snick: str
+    """snick"""
+    limit: int
+    """limit"""
+    logo: int
+    """logo"""
+    asid: int
+    """asid"""
+
+
+class DataDuowanStatisticalData(BaseModel):
+    server: str
+    """服务器"""
+    data: list[OneDataDuowanStatistical]
+    """数据"""
+
+
+class DataDuowanStatistical(BaseListData):
+    """
+    多玩数据
+    """
+
+    items: list[DataDuowanStatisticalData]
+    """榜单列表"""

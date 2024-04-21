@@ -6,6 +6,7 @@ from .model import (
     DataActiveListCalendar,
     DataAllNews,
     DataDetailed,
+    DataDuowanStatistical,
     DataEquip,
     DataExamAnswer,
     DataHomeFlower,
@@ -14,16 +15,30 @@ from .model import (
     DataLuckAdventure,
     DataLuckCollect,
     DataLuckStatistical,
+    DataMatchAwesome,
+    DataMatchRecent,
+    DataMatchSchools,
+    DataMember,
+    DataMemberRecruit,
+    DataRankStatistical,
     DataRoleAchievement,
     DataRoleTeamCdList,
     DataSchoolForce,
     DataSchoolMatrix,
+    DataSchoolRankStatistical,
     DataSchoolSkills,
     DataSchoolToxic,
+    DataServerAntivice,
     DataServerCheck,
+    DataServerEvent,
     DataServerMaster,
+    DataServerSand,
     DataServerStatus,
+    DataTieBaItemRecords,
     DataTiebaRandom,
+    DataTradeDemon,
+    DataValuablesCollect,
+    DataValuablesStatistical,
 )
 from .permission import require_ticket, require_token
 
@@ -404,16 +419,318 @@ class ApiInterface:
 
     @require_token
     @require_ticket
-    def data_match_recent(self, name: str, mode: Literal[22, 33, 55] = 33):
+    def data_match_recent(
+        self, name: str, mode: Literal[22, 33, 55] = 33
+    ) -> DataMatchRecent:
         """
         说明:
             角色近期战绩记录
 
         参数:
             * `name`: 必须的，角色名称
-            * `mode`: 可选的，模式选择，默认值 33
+            * `mode`: 可选的，比赛模式，查找该模式的记录，默认值 : 33
 
         注意:
             * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    def data_match_awesome(
+        self, mode: Literal[22, 33, 55] = 33, limit: int = 20
+    ) -> DataMatchAwesome:
+        """
+        说明:
+            战绩门派排行数据
+
+        参数:
+            * `mode`: 可选的，比赛模式，查找该模式的记录，默认值 : 33
+            * `limit`: 可选的，单页数量，设置返回的数量，默认值 : 20
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    def data_match_schools(self, mode: Literal[22, 33, 55] = 33) -> DataMatchSchools:
+        """
+        说明:
+            比赛统计门派数据
+
+        参数:
+            * `mode`: 可选的，比赛模式，查找该模式的记录，默认值 : 33
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    def data_member_recruit(
+        self, server: str, keyword: str = "", table: int = 1
+    ) -> DataMemberRecruit:
+        """
+        说明:
+            团队招募信息
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `keyword`: 可选的，关键字，模糊匹配记录，用=关键字完全匹配记录；
+            * `table`: 可选的，指定表记录，1=本服+跨服，2=本服，3=跨服，默认值：1
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_member_teacher(self, server: str, keyword: str = "") -> DataMember:
+        """
+        说明:
+            客户端师徒系统，师傅招募信息
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `keyword`: 可选的，关键字，查找该关键字的记录；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_member_student(self, server: str, keyword: str = "") -> DataMember:
+        """
+        说明:
+            客户端师徒系统，徒弟招募信息
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `keyword`: 可选的，关键字，查找该关键字的记录；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_server_sand(self, server: str) -> DataServerSand:
+        """
+        说明:
+            沙盘数据
+
+        参数:
+            * `server`: 必须的，区服名称
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_server_event(
+        self, name: Literal["恶人谷", "浩气盟"] = "恶人谷", limit: int = 100
+    ) -> DataServerEvent:
+        """
+        说明:
+            全服阵营大事件
+
+        参数:
+            * `name`: 必须的，阵营名称，查找该阵营的记录；
+            * `limit`: 可选的，单页数量，设置返回数量，默认值 : 100；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_trade_demon(self, server: str = "", limit: int = 10) -> DataTradeDemon:
+        """
+        说明:
+            金价比例信息
+
+        参数:
+            * `server`: 可选的，区服名称
+            * `limit`: 可选的，单页数量，设置返回的数量，默认值 : 10。
+
+        注意:
+            * 该接口需要使用 token。
+            * 未输入区服名称或输入错误区服名称时，将返回全部区服的金币比例信息。
+        """
+        ...
+
+    @require_token
+    def data_trade_record(self, name: str) -> None:
+        """
+        说明: TODO: 需要补充模型
+            黑市物品价格统计
+
+        参数:
+            * `name`: 必须的，外观名称，查找该外观的记录；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_tieba_item_records(
+        self, name: str, server: str = "-", limit: int = 1
+    ) -> DataTieBaItemRecords:
+        """
+        说明:
+            来自贴吧的外观记录。
+
+        参数:
+            * `name`: 必须的，外观名称，查找该外观的记录；
+            * `server`: 可选的，区服名称，查找该区服的记录，默认值：- 为全区服；
+            * `limit`: 可选的，设置返回的数量，默认值 : 1。
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_valuables_statistical(
+        self, server: str, name: str, limit: int = 20
+    ) -> DataValuablesStatistical:
+        """
+        说明:
+            统计副本掉落的贵重物品。
+
+        参数:
+            * `server`: 必须的，区服名称，查找该区服的记录；
+            * `name`: 必须的，物品名称，查找该物品的记录；
+            * `limit`: 可选的，单页数量，设置返回的数量，默认值：20；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_valuables_server_statistical(
+        self, name: str, limit: int = 30
+    ) -> DataValuablesStatistical:
+        """
+        说明:
+            统计当前赛季副本掉落的特殊物品。
+
+        参数:
+            * `name`: 必须的，物品名称，查找该物品的记录；
+            * `limit`: 可选的，单页数量，设置返回的数量，默认值：30；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_valuables_collect(self, server: str, num: int = 7) -> DataValuablesCollect:
+        """
+        说明:
+            副本掉落的特殊物品汇总
+
+        参数:
+            * `server`: 必须的，区服名称，查找该区服的记录；
+            * `num`: 可选的，设置返回的数量，默认值 7
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_server_antivice(self) -> DataServerAntivice:
+        """
+        说明:
+            诛恶事件历史记录(不允许轮询)
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_rank_statistical(
+        self, server: str, table: str, name: str
+    ) -> DataRankStatistical:
+        """
+        说明:
+            客户端战功榜与风云录
+
+        参数:
+            * `server`: 必须的，区服名称，查找该区服的记录；
+            * `table`: 必须的，榜单类型
+            * `name`: 必须的，榜单名称
+
+        `table` 与 `name` 的关联:
+            * `table` : 个人，`name` : 名士五十强 老江湖五十强 兵甲藏家五十强 名师五十强 阵营英雄五十强 薪火相传五十强 庐园广记一百强
+            * `table` : 帮会，`name` : 浩气神兵宝甲五十强 恶人神兵宝甲五十强 浩气爱心帮会五十强 恶人爱心帮会五十强
+            * `table` : 阵营，`name` : 赛季恶人五十强 赛季浩气五十强 上周恶人五十强 上周浩气五十强 本周恶人五十强 本周浩气五十强
+            * `table` : 试炼，`name` : 万花 七秀 少林 纯阳 天策 五毒 唐门 明教 苍云 长歌 藏剑 丐帮 霸刀 蓬莱 凌雪 衍天 药宗 刀宗
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_rank_server_statistical(
+        self, table: str, name: str
+    ) -> DataRankStatistical:
+        """
+        说明:
+            客户端战功榜与风云录，查看全服
+
+        参数:
+            * `table`: 必须的，榜单类型
+            * `name`: 必须的，榜单名称
+
+        `table` 与 `name` 的关联:
+            * `table` : 个人，`name` : 名士五十强 老江湖五十强 兵甲藏家五十强 名师五十强 阵营英雄五十强 薪火相传五十强 庐园广记一百强
+            * `table` : 帮会，`name` : 浩气神兵宝甲五十强 恶人神兵宝甲五十强 浩气爱心帮会五十强 恶人爱心帮会五十强
+            * `table` : 阵营，`name` : 赛季恶人五十强 赛季浩气五十强 上周恶人五十强 上周浩气五十强 本周恶人五十强 本周浩气五十强
+            * `table` : 试炼，`name` : 万花 七秀 少林 纯阳 天策 五毒 唐门 明教 苍云 长歌 藏剑 丐帮 霸刀 蓬莱 凌雪 衍天 药宗 刀宗
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    @require_ticket
+    def data_school_rank_statistical(
+        self, school: str = "ALL", server: str = "ALL"
+    ) -> DataSchoolRankStatistical:
+        """
+        说明:
+            游戏资历榜单
+
+        参数:
+            * `school`: 可选的，门派简称，查找该心法的记录，默认值 : ALL；
+            * `server`: 可选的，区服名称，查找该区服的记录，默认值 : ALL；
+
+        注意:
+            * 该接口需要使用 token 和 ticket。
+        """
+        ...
+
+    @require_token
+    def data_duowan_statistical(self, server: str = "ALL") -> DataDuowanStatistical:
+        """
+        说明:
+            服务器的统战歪歪。
+
+        参数:
+            * `server`: 可选的，区服名称，查找该区服的记录，默认值 : ALL；
+
+        注意:
+            * 该接口需要使用 token。
         """
         ...
