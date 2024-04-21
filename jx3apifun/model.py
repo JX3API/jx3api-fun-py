@@ -1209,8 +1209,384 @@ class DataDuowanStatisticalData(BaseModel):
     """asid"""
 
 
-class DataDuowanStatistical(BaseModel):
+class DataDuowanStatistical(BaseData):
+    """
+    统战频道数据
+    """
+
     server: str
     """服务器"""
     data: list[DataDuowanStatisticalData]
     """数据"""
+
+
+class DataActiveMonsterSkill(BaseData):
+    """
+    百战特殊技能
+    """
+
+    name: str
+    """名称"""
+    list: list[str]
+    """技能列表"""
+    desc: str
+    """描述"""
+
+
+class DataActiveMonsterData(BaseModel):
+    """
+    百战数据
+    """
+
+    index: int
+    """序号"""
+    name: str
+    """名称"""
+    data: DataActiveMonsterSkill
+    """技能"""
+
+
+class DataActiveMonster(BaseData):
+    """
+    百战首领
+    """
+
+    start: int
+    """开始时间"""
+    end: int
+    """结束时间"""
+    data: list[DataActiveMonsterData]
+    """数据"""
+
+
+class DataHorseRecord(BaseModel):
+    """
+    的卢记录
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    level: int
+    """等级"""
+    map_name: str
+    """地图名"""
+    refresh_time: int
+    """刷新时间"""
+    capture_role_name: str
+    """捕捉者"""
+    capture_camp_name: str
+    """捕捉者阵营"""
+    capture_time: int
+    """捕捉时间"""
+    auction_role_name: str
+    """拍卖者"""
+    auction_camp_name: str
+    """拍卖者阵营"""
+    auction_time: int
+    """拍卖时间"""
+    auction_amount: str
+    """拍卖金额"""
+    start_time: int
+    """开始时间"""
+    end_time: int
+    """结束时间"""
+
+
+class DataHorseData(BaseModel):
+    """
+    马场事件数据
+    """
+
+    yinshan: list[str] = Field(alias="阴山大草原")
+    """阴山大草原"""
+    kunpengdao: list[str] = Field(alias="鲲鹏岛")
+    """鲲鹏岛"""
+    heigebi: list[str] = Field(alias="黑戈壁")
+    """黑戈壁"""
+
+
+class DataHorseEvent(BaseData):
+    """
+    马场事件
+    """
+
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    data: DataHorseData
+    """数据"""
+
+
+class DataWatchRecord(BaseData):
+    """
+    烟花记录
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """烟花名称"""
+    map_name: str
+    """地图名"""
+    sender: str
+    """发送者"""
+    recipient: str
+    """接收者"""
+    status: int
+    """状态"""
+    time: int
+    """时间"""
+
+
+class DataWatchStatistical(DataWatchRecord):
+    """
+    烟花统计
+    """
+
+    mode: int
+    """模式"""
+
+
+class DataWatchCollect(BaseData):
+    """
+    烟花汇总
+    """
+
+    server: str
+    """服务器"""
+    sender: str
+    """发送者"""
+    recipient: str
+    """接收者"""
+    name: str
+    """烟花名称"""
+    count: int
+    """数量"""
+    time: int
+    """时间"""
+
+
+class DataChatMixed(BaseData):
+    """
+    智障聊天
+    """
+
+    id: int
+    """id"""
+    answer: str
+    """回答"""
+
+
+class DataMusicTencent(BaseData):
+    """
+    腾讯音乐
+    """
+
+    id: str
+    """歌曲id"""
+    name: str
+    """名称"""
+    singer: str
+    """歌手"""
+
+
+class DataMusicNetease(BaseData):
+    """
+    网易云音乐
+    """
+
+    id: int
+    """歌曲id"""
+    name: str
+    """名称"""
+    singer: str
+    """歌手"""
+
+
+class DataMusicKugou(BaseData):
+    """
+    酷狗音乐
+    """
+
+    SongName: str
+    """歌曲名"""
+    AlbumID: str
+    """专辑id"""
+    FileHash: str
+    """文件hash"""
+    SQFileHash: str
+    """SQ文件hash"""
+    HQFileHash: str
+    """HQ文件hash"""
+    MvHash: str
+    """MV hash"""
+    Audioid: int
+    """音频id"""
+    SingerName: str
+    """歌手名"""
+    PlayUrl: str
+    """播放链接"""
+    Img: str
+    """图片"""
+
+
+class DataFraudTiebaData(BaseModel):
+    """
+    贴吧详情
+    """
+
+    title: str
+    """标题"""
+    tid: int
+    """贴吧帖子id"""
+    text: str
+    """内容"""
+    time: int
+    """时间"""
+
+
+class DataFraudRecord(BaseModel):
+    """
+    骗子记录
+    """
+
+    server: str
+    """区服"""
+    tieba: str
+    """贴吧主站"""
+    data: list[DataFraudTiebaData]
+    """详情"""
+
+
+class DataFraudDetail(BaseData):
+    """
+    骗子记录
+    """
+
+    records: list[DataFraudRecord]
+    """记录"""
+
+
+class DataIdiomSolitaireData(BaseModel):
+    """
+    成语接龙记录
+    """
+
+    id: int
+    """id"""
+    name: str
+    """成语"""
+    tone: str
+    """音标"""
+    pinyin: str
+    """拼音"""
+    abbreviation: str
+    """"""
+    first: str
+    """首字拼音"""
+    last: str
+    """尾字拼音"""
+    derivation: str
+    """来源"""
+    example: str
+    """示例"""
+    explanation: str
+    """释义"""
+
+
+class DataIdiomSolitaire(BaseData):
+    """
+    成语接龙
+    """
+
+    question: DataIdiomSolitaireData
+    """问题"""
+    answer: DataIdiomSolitaireData
+    """结果"""
+
+
+class DataSaohua(BaseData):
+    """
+    骚话记录
+    """
+
+    id: int
+    """id"""
+    text: str
+    """骚话"""
+
+
+class DataSoundConverter(BaseData):
+    """
+    语音合成
+    """
+
+    text: str
+    """文本"""
+    token: str
+    """token"""
+    url: str
+    """链接"""
+
+
+class DataRoleMonsterSkill(BaseModel):
+    """
+    个人百战技能
+    """
+
+    bDeprecated: bool
+    """是否过期"""
+    dwInSkillID: int
+    """技能id"""
+    dwOutSkillID: int
+    """技能id"""
+    nColor: int
+    """颜色"""
+    nCost: int
+    """消耗"""
+    nLevel: int
+    """等级"""
+    szBossName: str
+    """产出boss名"""
+    szSkillName: str
+    """技能名"""
+    szType: str
+    """排布坐标"""
+
+
+class DataRoleMonster(BaseData):
+    """
+    个人百战技能
+    """
+
+    zoneName: str
+    """区服名称"""
+    serverName: str
+    """服务器名称"""
+    roleName: str
+    """角色名称"""
+    roleId: str
+    """角色id"""
+    globalRoleId: str
+    """全局角色id"""
+    gameEnergy: str
+    """精力"""
+    gameStamina: str
+    """体力"""
+    skillCount: str
+    """技能数量"""
+    skillList: list[DataRoleMonsterSkill]
+    """技能列表"""
+    updateTime: int
+    """更新时间"""

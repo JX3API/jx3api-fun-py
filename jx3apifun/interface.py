@@ -4,13 +4,19 @@ from .model import (
     DataActiveCalendar,
     DataActiveCelebrity,
     DataActiveListCalendar,
+    DataActiveMonster,
     DataAllNews,
+    DataChatMixed,
     DataDetailed,
     DataDuowanStatistical,
     DataEquip,
     DataExamAnswer,
+    DataFraudDetail,
     DataHomeFlower,
     DataHomeTravel,
+    DataHorseEvent,
+    DataHorseRecord,
+    DataIdiomSolitaire,
     DataLuckCollect,
     DataLuckStatistical,
     DataMatchAwesome,
@@ -18,9 +24,14 @@ from .model import (
     DataMatchSchools,
     DataMember,
     DataMemberRecruit,
+    DataMusicKugou,
+    DataMusicNetease,
+    DataMusicTencent,
     DataRankStatistical,
     DataRoleAchievement,
+    DataRoleMonster,
     DataRoleTeamCdList,
+    DataSaohua,
     DataSchoolForce,
     DataSchoolMatrix,
     DataSchoolRankStatistical,
@@ -32,11 +43,15 @@ from .model import (
     DataServerMaster,
     DataServerSand,
     DataServerStatus,
+    DataSoundConverter,
     DataTieBaItemRecords,
     DataTiebaRandom,
     DataTradeDemon,
     DataValuablesCollect,
     DataValuablesStatistical,
+    DataWatchCollect,
+    DataWatchRecord,
+    DataWatchStatistical,
 )
 from .permission import require_ticket, require_token
 
@@ -737,6 +752,257 @@ class ApiInterface:
 
         参数:
             * `server`: 可选的，区服名称，查找该区服的记录，默认值 : ALL；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_active_monster(self) -> DataActiveMonster:
+        """
+        说明:
+            本周百战异闻录刷新的首领以及特殊效果。
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_horse_records(self, server: str = "") -> list[DataHorseRecord]:
+        """
+        说明:
+            客户端的卢刷新记录。
+
+        参数:
+            * `server`: 可选的，区服名称，查找该区服的记录；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_horse_event(self, server: str) -> DataHorseEvent:
+        """
+        说明:
+            客户端马场刷新记录。
+
+        参数:
+            * `server`: 必须的，区服名称，查找该区服的记录；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_watch_record(self, server: str, name: str) -> list[DataWatchRecord]:
+        """
+        说明:
+            烟花赠送与接收的历史记录，不保证遗漏。
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，角色名称
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_watch_statistical(
+        self, server: str, name: str, limit: int = 20
+    ) -> list[DataWatchStatistical]:
+        """
+        说明:
+            统计烟花记录。
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，角色名称
+            * `limit`: 可选的，设置返回的数量，默认值 20
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_watch_collect(self, server: str, num: int = 7) -> list[DataWatchCollect]:
+        """
+        说明:
+            汇总烟花记录。
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `num`: 可选的，设置返回的数量，默认值 7
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_watch_rank_statistical(
+        self,
+        server: str,
+        column: Literal["sender", "recipient", "name"],
+        this_time: int,
+        that_time: int,
+    ) -> list[DataWatchCollect]:
+        """
+        说明:
+            烟花排行榜
+
+        参数:
+            * `server`: 必须的，区服名称，查找该区服的记录
+            * `column`: 必须的，可选范围：[sender recipient name]
+            * `this_time`: 必须的，统计开始的时间，与结束的时间不得超过3个月
+            * `that_time`: 必须的，统计结束的时间，与开始的时间不得超过3个月
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_chat_mixed(self, name: str, text: str) -> DataChatMixed:
+        """
+        说明:
+            智障聊天
+
+        参数:
+            * `name`: 必须的，机器人的名称；
+            * `text`: 必须的，聊天的完整内容；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_music_tencent(self, name: str) -> list[DataMusicTencent]:
+        """
+        说明:
+            搜索腾讯音乐歌曲编号。
+
+        参数:
+            * `name`: 必须的，歌曲名称；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_music_netease(self, name: str) -> list[DataMusicNetease]:
+        """
+        说明:
+            搜索网易云音乐歌曲编号。
+
+        参数:
+            * `name`: 必须的，歌曲名称；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_music_kugou(self, name: str) -> list[DataMusicKugou]:
+        """
+        说明:
+            搜索酷狗音乐歌曲编号。
+
+        参数:
+            * `name`: 必须的，歌曲名称；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    @require_token
+    def data_fraud_detail(self, uin: int) -> DataFraudDetail:
+        """
+        说明:
+            搜索贴吧的行骗记录
+
+        参数:
+            * `uin`: 必须的，用户QQ号，查找是否存在行骗记录；
+
+        注意:
+            * 该接口需要使用 token。
+        """
+        ...
+
+    def data_idiom_solitaire(self, name: str) -> DataIdiomSolitaire:
+        """
+        说明:
+            校对成语并返回相关成语
+
+        参数:
+            * `name`: 必须的，查找对应词语。
+        """
+        ...
+
+    def data_saohua_random(self) -> DataSaohua:
+        """
+        说明:
+            门派骚话
+        """
+        ...
+
+    def data_saohua_content(self) -> DataSaohua:
+        """
+        说明:
+            召唤一条舔狗日记。
+        """
+        ...
+
+    def data_sound_converter(
+        self,
+        appkey: str,
+        access: str,
+        secret: str,
+        text: str,
+        voice: str = "Aitong",
+        format: str = "mp3",
+        sample_rate: int = 16000,
+        volume: int = 50,
+        speech_rate: int = 0,
+        pitch_rate: int = 0,
+    ) -> DataSoundConverter:
+        """
+        说明:
+            阿里云语音合成（TTS）
+
+        参数:
+            * `appkey`: 必须的，阿里云appkey
+            * `access`: 必须的，阿里云access
+            * `secret`: 必须的，阿里云secret
+            * `text`: 必须的，合成文本
+            * `voice`: 可选的，发音人，默认值 [Aitong]
+            * `format`: 可选的，编码格式，范围 [PCM][WAV][MP3]，默认值 [MP3]
+            * `sample_rate`: 可选的，采样率，默认值 [16000]
+            * `volume`: 可选的，音量，范围 [0～100]，默认值 [50]
+            * `speech_rate`: 可选的，语速，范围 [-500～500]，默认值 [0]
+            * `pitch_rate`: 可选的，音调，范围 [-500～500]，默认值[0]
+        """
+        ...
+
+    @require_token
+    def data_role_monster(self, server: str, name: str) -> DataRoleMonster:
+        """
+        说明:
+            查看个人百战信息。
+
+        参数:
+            * `server`: 必须的，区服名称
+            * `name`: 必须的，角色名称
 
         注意:
             * 该接口需要使用 token。
