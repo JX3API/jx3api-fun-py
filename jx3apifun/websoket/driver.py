@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 from typing import cast
 
 import websockets
@@ -14,6 +15,9 @@ from .collator import Collator
 from .event import EventModel, EventType
 from .register import Register
 from .store import ResultStore
+
+logging.getLogger("websockets").addHandler(logging.NullHandler())
+logging.getLogger("websockets").propagate = False
 
 
 class WebsocketDriver:
