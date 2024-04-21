@@ -1,6 +1,6 @@
 from .http import AsyncApiHandler, AsyncDriver, SyncApiHandler, SyncDriver
 from .logger import LoggerProtocol
-from .websoket import WebsocketDriver, WebsocketHandler
+from .websoket import Register, WebsocketDriver, WebsocketHandler
 
 
 class Jx3Api:
@@ -8,8 +8,6 @@ class Jx3Api:
     jx3api管理器，用于管理jx3api的各种接口
     """
 
-    logger: LoggerProtocol
-    """日志器"""
     sync_handler: SyncApiHandler = SyncApiHandler()
     """同步接口处理器"""
     sync_driver: SyncDriver = SyncDriver()
@@ -32,7 +30,8 @@ class Jx3Api:
         """
         设置日志器
         """
-        self.logger = logger
+        register = Register()
+        register.set_logger(logger)
         self.sync_handler.set_logger(logger)
         self.sync_driver.set_logger(logger)
         self.async_handler.set_logger(logger)

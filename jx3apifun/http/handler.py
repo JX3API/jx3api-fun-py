@@ -4,7 +4,7 @@ from typing import Any, Callable, Coroutine, ParamSpec, TypeVar
 
 from jx3apifun.interface import ApiInterface
 from jx3apifun.interface_async import ApiInterfaceAsync
-from jx3apifun.logger import AbsLogger, LoggerProtocol
+from jx3apifun.logger import DefaultLogger, LoggerProtocol
 from jx3apifun.model import BaseData
 
 from .caller import ApiCaller, make_request
@@ -18,7 +18,7 @@ class SyncApiHandler(ApiInterface):
     同步接口处理器
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    logger: LoggerProtocol = DefaultLogger()
 
     def __init__(self) -> None:
         obj = ApiInterface()
@@ -61,7 +61,7 @@ class AsyncApiHandler(ApiInterfaceAsync):
     异步接口处理器
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    logger: LoggerProtocol = DefaultLogger()
 
     def __init__(self) -> None:
         obj = ApiInterfaceAsync()

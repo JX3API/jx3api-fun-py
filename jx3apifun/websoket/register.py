@@ -4,7 +4,7 @@ import traceback
 from typing import Any, Callable, Coroutine, Generic, TypeVar
 
 from jx3apifun.exceptions import EventParamError
-from jx3apifun.logger import AbsLogger, LoggerProtocol
+from jx3apifun.logger import DefaultLogger, LoggerProtocol
 
 from .event import EventModel, EventType
 
@@ -16,7 +16,7 @@ class Register(Generic[T]):
     事件注册器
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    logger: LoggerProtocol = DefaultLogger()
     """logger"""
     handler_map: dict[EventType, list[Callable[[T], Coroutine[Any, Any, None]]]] = {}
     """handler map"""

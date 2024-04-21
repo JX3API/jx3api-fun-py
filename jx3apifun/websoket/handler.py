@@ -3,7 +3,7 @@ from functools import wraps
 from typing import Any, Callable, Coroutine, ParamSpec, TypeVar
 
 from jx3apifun.interface_async import ApiInterfaceAsync
-from jx3apifun.logger import AbsLogger, LoggerProtocol
+from jx3apifun.logger import DefaultLogger, LoggerProtocol
 from jx3apifun.model import BaseData
 
 from .caller import ApiCaller, make_request
@@ -22,14 +22,11 @@ class WebsocketHandler(ApiInterfaceAsync):
     websocket handler
     """
 
-    register: Register
-    """register"""
     logger: LoggerProtocol
     """logger"""
 
     def __init__(self) -> None:
-        self.logger = AbsLogger()
-        self.register = Register()
+        self.logger = DefaultLogger()
 
         obj = ApiInterfaceAsync()
         methods_list = [method for method in dir(obj) if callable(getattr(obj, method))]
@@ -65,7 +62,6 @@ class WebsocketHandler(ApiInterfaceAsync):
         设置日志器
         """
         self.logger = logger
-        self.register.set_logger(logger)
 
     async def start_connect(self) -> None:
         """
@@ -94,7 +90,8 @@ class WebsocketHandler(ApiInterfaceAsync):
             """
             包装器
             """
-            self.register.register(type, func)
+            register = Register()
+            register.register(type, func)
             return func
 
         return wrapper

@@ -8,7 +8,7 @@ from websockets.client import WebSocketClientProtocol
 
 from jx3apifun.const import WS_RUL, WSAPI_TIMEOUT
 from jx3apifun.exceptions import TicketError, TokenError
-from jx3apifun.logger import AbsLogger, LoggerProtocol
+from jx3apifun.logger import DefaultLogger, LoggerProtocol
 from jx3apifun.model import Request, Response
 
 from .collator import Collator
@@ -25,7 +25,7 @@ class WebsocketDriver:
     websocket driver
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    logger: LoggerProtocol = DefaultLogger()
     """logger"""
     token: str = ""
     """token"""

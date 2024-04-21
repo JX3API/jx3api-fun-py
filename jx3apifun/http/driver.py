@@ -1,7 +1,7 @@
 from httpx import AsyncClient, Client
 
 from jx3apifun.exceptions import NetworkError, TicketError, TokenError
-from jx3apifun.logger import AbsLogger, LoggerProtocol
+from jx3apifun.logger import DefaultLogger, LoggerProtocol
 from jx3apifun.model import Request, Response
 
 
@@ -10,7 +10,7 @@ class SyncDriver:
     同步接口驱动器
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    logger: LoggerProtocol = DefaultLogger()
     """日志器"""
     client: Client = Client()
     """客户端"""
@@ -80,7 +80,7 @@ class AsyncDriver:
     异步接口驱动器
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    logger: LoggerProtocol = DefaultLogger()
     """日志器"""
     client: AsyncClient = AsyncClient()
     """客户端"""

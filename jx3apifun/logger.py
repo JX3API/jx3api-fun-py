@@ -31,9 +31,9 @@ class LoggerProtocol(Protocol):
         ...
 
 
-class AbsLogger:
+class DefaultLogger:
     """
-    抽象日志器
+    默认日志器
     """
 
     def info(self, message: str, *args, **kwargs) -> None:
