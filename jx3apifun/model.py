@@ -1056,6 +1056,68 @@ class DataTradeDemon(BaseModel):
     """日期"""
 
 
+class DataTradeRecordData(BaseModel):
+    """
+    物价数据
+    """
+
+    id: int
+    """id"""
+    index: int
+    """序号"""
+    type: str = Field(alias="class")
+    """类型"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    value: int
+    """价格"""
+    sales: int
+    """销量"""
+    token: str
+    """token"""
+    source: int
+    """来源"""
+    date: str
+    """日期"""
+    status: int
+    """状态"""
+    datetime: str
+    """时间"""
+
+
+class DataTradeRecord(BaseData):
+    """
+    物价记录
+    """
+
+    id: int
+    """id"""
+    type: str = Field(alias="class")
+    """类型"""
+    subclass: str
+    """子类别"""
+    name: str
+    """名称"""
+    alias: str
+    """别名"""
+    subalias: str
+    """子别名"""
+    row: str
+    """行"""
+    level: int
+    """等级"""
+    desc: str
+    """描述"""
+    view: str
+    """图片"""
+    date: str
+    """日期"""
+    data: list[list[DataTradeRecordData]]
+    """数据"""
+
+
 class DataTieBaItemRecords(BaseModel):
     """
     贴吧物品记录

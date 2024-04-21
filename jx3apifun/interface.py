@@ -47,6 +47,7 @@ from .model import (
     DataTieBaItemRecords,
     DataTiebaRandom,
     DataTradeDemon,
+    DataTradeRecord,
     DataValuablesCollect,
     DataValuablesStatistical,
     DataWatchCollect,
@@ -435,13 +436,14 @@ class ApiInterface:
     @require_token
     @require_ticket
     def data_match_recent(
-        self, name: str, mode: Literal[22, 33, 55] = 33
+        self, server: str, name: str, mode: Literal[22, 33, 55] = 33
     ) -> DataMatchRecent:
         """
         说明:
             角色近期战绩记录
 
         参数:
+            * `server`: 必须的，区服名称
             * `name`: 必须的，角色名称
             * `mode`: 可选的，比赛模式，查找该模式的记录，默认值 : 33
 
@@ -583,9 +585,9 @@ class ApiInterface:
         ...
 
     @require_token
-    def data_trade_record(self, name: str) -> None:
+    def data_trade_record(self, name: str) -> DataTradeRecord:
         """
-        说明: TODO: 需要补充模型
+        说明:
             黑市物品价格统计
 
         参数:
