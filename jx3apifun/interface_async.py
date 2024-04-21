@@ -16,6 +16,7 @@ from .model import (
     DataHorseEvent,
     DataHorseRecord,
     DataIdiomSolitaire,
+    DataLuckAdventure,
     DataLuckCollect,
     DataLuckStatistical,
     DataMatchAwesome,
@@ -351,7 +352,7 @@ class ApiInterfaceAsync:
 
     @require_token
     @require_ticket
-    async def data_luck_adventure(self, server: str, name: str) -> DataLuckStatistical:
+    async def data_luck_adventure(self, server: str, name: str) -> list[DataLuckAdventure]:
         """
         说明:
             角色奇遇触发记录(不保证遗漏)
@@ -456,7 +457,7 @@ class ApiInterfaceAsync:
     @require_ticket
     async def data_match_awesome(
         self, mode: Literal[22, 33, 55] = 33, limit: int = 20
-    ) -> DataMatchAwesome:
+    ) -> list[DataMatchAwesome]:
         """
         说明:
             战绩门派排行数据
@@ -490,7 +491,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_member_recruit(
         self, server: str, keyword: str = "", table: int = 1
-    ) -> list[DataMemberRecruit]:
+    ) -> DataMemberRecruit:
         """
         说明:
             团队招募信息
@@ -506,7 +507,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_member_teacher(self, server: str, keyword: str = "") -> list[DataMember]:
+    async def data_member_teacher(self, server: str, keyword: str = "") -> DataMember:
         """
         说明:
             客户端师徒系统，师傅招募信息
@@ -521,7 +522,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_member_student(self, server: str, keyword: str = "") -> list[DataMember]:
+    async def data_member_student(self, server: str, keyword: str = "") -> DataMember:
         """
         说明:
             客户端师徒系统，徒弟招募信息
