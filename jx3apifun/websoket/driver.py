@@ -100,7 +100,8 @@ class WebsocketDriver:
         """
         if self.connected:
             return
-        self.ws = await websockets.connect(WS_RUL)
+        self.ws = await websockets.connect(WS_RUL, extra_headers={"token": self.token})
+        self.logger.info("ws连接成功...")
         self.connected = True
         asyncio.create_task(self.handle_connection())
 
@@ -123,6 +124,7 @@ class WebsocketDriver:
                     self.handle_message(data)
 
             except websockets.ConnectionClosed:
+                self.logger.info("ws连接已关闭...")
                 self.connected = False
                 break
 

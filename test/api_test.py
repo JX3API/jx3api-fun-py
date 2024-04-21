@@ -23,7 +23,6 @@ async def handle_all_event(event: EventModel) -> None:
 
 async def main():
     await handler.start_connect()
-    logger.info("连接ws成功")
     await asyncio.sleep(5)
     result = await handler.data_active_calendar()
     logger.info(f"收到ws结果：{result}")
