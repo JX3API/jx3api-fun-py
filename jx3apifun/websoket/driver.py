@@ -116,7 +116,7 @@ class WebsocketDriver:
         while self.connected:
             try:
                 data = await self.ws.recv()
-                print(f"收到ws消息: {data}")
+                self.logger.debug(f"ws接收到消息：{data}")
                 if isinstance(data, str):
                     self.handle_message(data)
 

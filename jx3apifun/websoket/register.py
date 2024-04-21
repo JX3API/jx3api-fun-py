@@ -1,8 +1,10 @@
 import asyncio
 import inspect
+import traceback
 from typing import Any, Callable, Coroutine, Generic, TypeVar
 
 from jx3apifun.exceptions import EventParamError
+from jx3apifun.logger import AbsLogger, LoggerProtocol
 
 from .event import EventModel, EventType
 
@@ -14,13 +16,20 @@ class Register(Generic[T]):
     事件注册器
     """
 
-    handler_map: dict[EventType, list[Callable[[T], Coroutine[Any, Any, None]]]] = {}
+    logger: LoggerProtocol
+    """logger"""
+    handler_map: dict[EventType, list[Callable[[T], Coroutine[Any, Any, None]]]]
     """handler map"""
 
-    def __new__(cls):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super().__new__(cls)
-        return cls._instance
+    def __init__(self) -> None:
+        self.logger = AbsLogger()
+        self.handler_map = {}
+
+    def set_logger(self, logger: LoggerProtocol) -> None:
+        """
+        设置日志器
+        """
+        self.logger = logger
 
     def register(
         self, action: EventType, func: Callable[[T], Coroutine[Any, Any, None]]
@@ -60,14 +69,13 @@ class Register(Generic[T]):
         运行事件
         """
         if event.action == EventType.All:
-            # TODO: 未知事件处理
-            print(f"未知事件: {event}")
+            self.logger.error(f"ws接收到未知事件：{event}")
             return
         try:
             await self.run_handler_simple(event)
             await self.run_handler_all(event)
-        except Exception as e:
-            print(e)
+        except Exception:
+            self.logger.error(f"ws事件处理发生错误: {traceback.format_exc()}")
 
     async def run_handler_simple(self, event: T) -> None:
         """

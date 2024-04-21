@@ -22,9 +22,15 @@ class WebsocketHandler(ApiInterfaceAsync):
     websocket handler
     """
 
-    logger: LoggerProtocol = AbsLogger()
+    register: Register
+    """register"""
+    logger: LoggerProtocol
+    """logger"""
 
     def __init__(self) -> None:
+        self.logger = AbsLogger()
+        self.register = Register()
+
         obj = ApiInterfaceAsync()
         methods_list = [method for method in dir(obj) if callable(getattr(obj, method))]
         for method in methods_list:
@@ -49,7 +55,7 @@ class WebsocketHandler(ApiInterfaceAsync):
                 bound.arguments.pop("self")
             request = make_request(func.__name__, **bound.arguments)
             model = signature.return_annotation
-            caller = ApiCaller[T]()
+            caller = ApiCaller[T](self.logger)
             return await caller(request, model)
 
         return wrapper
@@ -59,6 +65,7 @@ class WebsocketHandler(ApiInterfaceAsync):
         设置日志器
         """
         self.logger = logger
+        self.register.set_logger(logger)
 
     async def start_connect(self) -> None:
         """
@@ -87,8 +94,7 @@ class WebsocketHandler(ApiInterfaceAsync):
             """
             包装器
             """
-            register = Register()
-            register.register(type, func)
+            self.register.register(type, func)
             return func
 
         return wrapper

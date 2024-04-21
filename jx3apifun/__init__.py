@@ -1,3 +1,5 @@
+from typing import Any
+
 from .http import AsyncApiHandler, SyncApiHandler
 from .jx3api import Jx3Api
 from .logger import LoggerProtocol
@@ -49,3 +51,14 @@ def set_token(token: str) -> None:
     设置token
     """
     api_instance.set_token(token)
+
+
+def logger_wrapper(logger: Any) -> LoggerProtocol:
+    """
+    说明:
+        将外部日志器包装成jx3api的日志器
+
+    注意:
+        外部日志器需要实现info, debug, warning, error方法
+    """
+    return logger
