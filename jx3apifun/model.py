@@ -66,8 +66,6 @@ class DataActiveCalendar(BaseData):
     """福源"""
     card: list[str]
     """卡牌"""
-    team: list[str]
-    """周常"""
 
 
 class ToDayData(BaseModel):
@@ -373,7 +371,7 @@ class DataSchoolForce(BaseModel):
     """数据"""
 
 
-class DataSchoolSkills(BaseModel):
+class DataSchoolSkillsData(BaseModel):
     """
     单个门派技能
     """
@@ -402,6 +400,17 @@ class DataSchoolSkills(BaseModel):
     """释放类型"""
     weapon: str
     """武器"""
+
+
+class DataSchoolSkills(BaseData):
+    """
+    门派技能
+    """
+
+    type: str = Field(alias="class")
+    """分类"""
+    data: list[DataSchoolSkillsData]
+    """数据"""
 
 
 class DataTiebaRandom(BaseModel):
@@ -507,13 +516,26 @@ class OneModifyType(BaseModel):
     """百分比"""
 
 
+class OnePerManentEnchantAttriDesc(BaseModel):
+    """
+    附魔属性描述
+    """
+
+    desc: str
+    """描述"""
+
+
 class OnePerManentEnchantAttri(BaseModel):
     """
     附魔属性
     """
 
-    desc: str
-    """描述"""
+    max: str
+    """最大值"""
+    min: str
+    """最小值"""
+    attrib: list[OnePerManentEnchantAttriDesc]
+    """属性描述"""
 
 
 class OnePerManentEnchant(BaseModel):
@@ -529,7 +551,7 @@ class OnePerManentEnchant(BaseModel):
     """等级"""
     icon: str
     """图标"""
-    attrib: list[OnePerManentEnchantAttri]
+    attributes: list[OnePerManentEnchantAttri]
     """属性"""
 
 
@@ -546,7 +568,7 @@ class BaseTypeAttri(BaseModel):
     """坐骑属性"""
     HorseMagic: str
     """坐骑魔法属性"""
-    Type: str
+    Type: Optional[str] = None
     """类型"""
     percent: bool
     """百分比"""
@@ -582,7 +604,22 @@ class Base2Type(BaseModel):
     """描述"""
 
 
-class DataEquip(BaseModel):
+class CommonEnchant(BaseModel):
+    """
+    通用附魔
+    """
+
+    id: str
+    """id"""
+    name: str
+    """名称"""
+    icon: str
+    """图标"""
+    desc: str
+    """描述"""
+
+
+class DataRoleEquip(BaseModel):
     """
     装备数据
     """
@@ -609,18 +646,76 @@ class DataEquip(BaseModel):
     """描述"""
     source: Optional[str] = None
     """来源"""
-    fiveStone: list[OneFiveStone]
+    fiveStone: Optional[list[OneFiveStone]] = None
     """五行石"""
-    colorStone: ColorStone
+    colorStone: Optional[ColorStone] = None
     """五彩石"""
     modifyType: list[OneModifyType]
     """属性"""
     permanentEnchant: list[OnePerManentEnchant]
-    """附魔"""
+    """专属附魔"""
+    commonEnchant: Optional[CommonEnchant] = None
+    """通用附魔"""
     Base1Type: Base1Type
     """基础属性1"""
     Base2Type: Base2Type
     """基础属性2"""
+
+
+class DataRoleQixue(BaseModel):
+    """
+    奇穴数据
+    """
+
+    name: str
+    """名称"""
+    level: int
+    """等级"""
+    icon: str
+    """图标"""
+    kind: str
+    """类型"""
+    subKind: str
+    """子类型"""
+    desc: str
+    """描述"""
+
+
+class DataRolePanelData(BaseModel):
+    """
+    角色面板数据
+    """
+
+    name: str
+    """名称"""
+    percent: bool
+    """百分比"""
+    value: Union[int, float]
+    """数值"""
+
+
+class DataRolePanel(BaseModel):
+    """
+    角色面板
+    """
+
+    score: int
+    """评分"""
+    panel: list[DataRolePanelData]
+    """面板数据"""
+
+
+class DataRoleAttribute(DataDetailed):
+    """
+    角色属性
+    """
+
+    equipList: list[DataRoleEquip]
+    """装备列表"""
+    qixueList: list[DataRoleQixue]
+    """奇穴列表"""
+    panelList: DataRolePanel
+    """面板数据"""
 
 
 class BossProgress(BaseModel):
@@ -670,9 +765,9 @@ class DataRoleTeamCdList(DataDetailed):
     """副本数据"""
 
 
-class DataLuckStatistical(BaseData):
+class DataLuckAdventure(BaseData):
     """
-    角色奇遇触发记录(不保证遗漏)
+    奇遇记录
     """
 
     zone: str
@@ -685,6 +780,27 @@ class DataLuckStatistical(BaseData):
     """奇遇名"""
     level: int
     """等级"""
+    status: int
+    """状态"""
+    time: int
+    """时间"""
+
+
+class DataLuckStatistical(BaseData):
+    """
+    奇遇统计
+    """
+
+    id: int
+    """id"""
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    name: str
+    """名称"""
+    event: str
+    """奇遇名"""
     status: int
     """状态"""
     time: int
@@ -900,7 +1016,7 @@ class DataMatchSchools(BaseModel):
     """上次排名"""
 
 
-class DataMemberRecruit(BaseModel):
+class DataMemberRecruitData(BaseModel):
     """
     团队招募信息
     """
@@ -917,7 +1033,7 @@ class DataMemberRecruit(BaseModel):
     """团长"""
     pushId: int
     """推送id"""
-    roomID: str
+    roomID: Union[str, int]
     """房间id"""
     roleId: int
     """角色id"""
@@ -927,15 +1043,30 @@ class DataMemberRecruit(BaseModel):
     """当前人数"""
     maxNumber: int
     """最大人数"""
-    label: list[str]
+    label: list[int]
     """标签"""
     content: str
     """内容"""
 
 
-class DataMember(BaseModel):
+class DataMemberRecruit(BaseData):
     """
-    师父列表数据
+    团队招募
+    """
+
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    data: list[DataMemberRecruitData]
+    """招募信息"""
+    time: int
+    """时间"""
+
+
+class DataMemberData(BaseModel):
+    """
+    师徒列表数据
     """
 
     roleId: int
@@ -962,6 +1093,19 @@ class DataMember(BaseModel):
     """宣言"""
     time: int
     """时间"""
+
+
+class DataMember(BaseData):
+    """
+    师徒数据
+    """
+
+    zone: str
+    """区服"""
+    server: str
+    """服务器"""
+    data: list[DataMemberData]
+    """师徒列表"""
 
 
 class OneDataServerSand(BaseModel):

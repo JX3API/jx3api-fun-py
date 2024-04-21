@@ -9,7 +9,6 @@ from .model import (
     DataChatMixed,
     DataDetailed,
     DataDuowanStatistical,
-    DataEquip,
     DataExamAnswer,
     DataFraudDetail,
     DataHomeFlower,
@@ -17,6 +16,7 @@ from .model import (
     DataHorseEvent,
     DataHorseRecord,
     DataIdiomSolitaire,
+    DataLuckAdventure,
     DataLuckCollect,
     DataLuckStatistical,
     DataMatchAwesome,
@@ -29,6 +29,7 @@ from .model import (
     DataMusicTencent,
     DataRankStatistical,
     DataRoleAchievement,
+    DataRoleAttribute,
     DataRoleMonster,
     DataRoleTeamCdList,
     DataSaohua,
@@ -91,7 +92,7 @@ class ApiInterface:
         """
         ...
 
-    def data_active_celebrity(self, season: int = 2) -> DataActiveCelebrity:
+    def data_active_celebrity(self, season: int = 2) -> list[DataActiveCelebrity]:
         """
         说明:
             当前时间的楚天社/云从社进度。
@@ -319,7 +320,7 @@ class ApiInterface:
 
     @require_token
     @require_ticket
-    def data_role_attribute(self, server: str, name: str) -> list[DataEquip]:
+    def data_role_attribute(self, server: str, name: str) -> DataRoleAttribute:
         """
         说明:
             角色装备属性详情
@@ -351,7 +352,7 @@ class ApiInterface:
 
     @require_token
     @require_ticket
-    def data_luck_adventure(self, server: str, name: str) -> DataLuckStatistical:
+    def data_luck_adventure(self, server: str, name: str) -> list[DataLuckAdventure]:
         """
         说明:
             角色奇遇触发记录(不保证遗漏)
@@ -456,7 +457,7 @@ class ApiInterface:
     @require_ticket
     def data_match_awesome(
         self, mode: Literal[22, 33, 55] = 33, limit: int = 20
-    ) -> DataMatchAwesome:
+    ) -> list[DataMatchAwesome]:
         """
         说明:
             战绩门派排行数据
@@ -490,7 +491,7 @@ class ApiInterface:
     @require_token
     def data_member_recruit(
         self, server: str, keyword: str = "", table: int = 1
-    ) -> list[DataMemberRecruit]:
+    ) -> DataMemberRecruit:
         """
         说明:
             团队招募信息
@@ -506,7 +507,7 @@ class ApiInterface:
         ...
 
     @require_token
-    def data_member_teacher(self, server: str, keyword: str = "") -> list[DataMember]:
+    def data_member_teacher(self, server: str, keyword: str = "") -> DataMember:
         """
         说明:
             客户端师徒系统，师傅招募信息
@@ -521,7 +522,7 @@ class ApiInterface:
         ...
 
     @require_token
-    def data_member_student(self, server: str, keyword: str = "") -> list[DataMember]:
+    def data_member_student(self, server: str, keyword: str = "") -> DataMember:
         """
         说明:
             客户端师徒系统，徒弟招募信息

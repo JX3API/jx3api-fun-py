@@ -9,6 +9,7 @@ from typing import (
 from pydantic import TypeAdapter
 
 from jx3apifun.const import API_URL
+from jx3apifun.exceptions import ResponseDataError
 from jx3apifun.model import BaseData, Request
 from jx3apifun.permission import is_require_ticket, is_require_token
 
@@ -54,6 +55,10 @@ class ApiCaller(Generic[T]):
             driver.check_ticket(request)
 
         response = driver.request(request)
+        if response.code != 200:
+            raise ResponseDataError(
+                f"请求[{request.name}]出错，code: {response.code}, msg: {response.msg}"
+            )
         data = response.data
         adapter = TypeAdapter(model)
         return adapter.validate_python(data)

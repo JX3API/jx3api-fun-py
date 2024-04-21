@@ -5,7 +5,7 @@ from jx3apifun import get_sync_handler
 api = get_sync_handler()
 
 
-def sync_test():
+def sync_test() -> None:
     result = api.data_active_calendar()
     print(f"data/active/calendar: {result}")
     time.sleep(0.5)
@@ -152,7 +152,7 @@ def sync_test():
     print(f"data/trade/demon: {result}")
     time.sleep(0.5)
 
-    result = api.data_tieba_item_records(name="狐金")
+    result = api.data_tieba_item_records(name="初代金")
     print(f"data/tieba/item/records: {result}")
     time.sleep(0.5)
 
