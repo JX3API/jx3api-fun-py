@@ -1,6 +1,15 @@
 # Jx3api for fun
 一款女生自用的jx3api sdk，本仓库主要是为了整活儿，正经使用应该选择受姐姐的[jx3api](https://github.com/JX3API/jx3api-py)。
 
+## 功能
+
+当前sdk功能列表有：
+
+- 访问 `www.jx3api.com` 的接口并获取响应
+- 提供同步访问、异步访问（包含复用websocket连接访问）
+- 提供websocket连接到 jx3api 的服务器
+- 可以注册对应的ws事件并处理
+
 ## 安装
 
 ###  pypi
@@ -72,7 +81,7 @@ await handler.close_connect()
 
 #### 调用接口
 
-使用websocket通信来查询接口，需要先连接ws才行。
+复用websocket通信来查询接口，需要先连接ws才行。
 
 ```python
 from jx3apifun import get_websocket_handler
