@@ -16,6 +16,12 @@ class ResponseDataError(JX3APIException):
     pass
 
 
+class EventParamError(JX3APIException):
+    """event参数异常"""
+
+    pass
+
+
 class TokenError(JX3APIException):
     """token检测异常"""
 

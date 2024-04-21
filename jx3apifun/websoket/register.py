@@ -1,5 +1,8 @@
 import asyncio
+import inspect
 from typing import Any, Callable, Coroutine, Generic, TypeVar
+
+from jx3apifun.exceptions import EventParamError
 
 from .event import EventModel, EventType
 
@@ -25,9 +28,32 @@ class Register(Generic[T]):
         """
         注册事件
         """
+        self.check_parameter(action, func)
         if action not in self.handler_map:
             self.handler_map[action] = []
         self.handler_map[action].append(func)
+
+    def check_parameter(
+        self, action: EventType, func: Callable[[T], Coroutine[Any, Any, None]]
+    ) -> None:
+        """
+        校验参数
+        """
+        signature = inspect.signature(func)
+        parameters = signature.parameters
+        if len(parameters) != 1:
+            raise EventParamError(
+                f"事件处理函数[{func.__name__}]中，注册事件参数数量错误."
+            )
+        param_type = list(parameters.values())[0].annotation
+        if not issubclass(param_type, EventModel):
+            raise EventParamError(
+                f"事件处理函数[{func.__name__}]中，注册事件参数类型错误."
+            )
+        if action != param_type.model_fields["action"].default:
+            raise EventParamError(
+                f"事件处理函数[{func.__name__}]中，注册的事件[{action}]和传递的事件参数[{param_type}]不匹配."
+            )
 
     async def run_handler(self, event: T) -> None:
         """
