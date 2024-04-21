@@ -11,7 +11,7 @@ from jx3apifun import get_websocket_handler, logger_wrapper, set_logger  # noqa:
 from jx3apifun.websoket.event import EventModel, EventType  # noqa: E402
 
 handler = get_websocket_handler()
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("jx3apifun")
 set_logger(logger_wrapper(logger))
 

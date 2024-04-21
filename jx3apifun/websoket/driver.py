@@ -86,7 +86,7 @@ class WebsocketDriver:
         echo = self.store.get_seq()
         data = {"action": request.url, "data": request.data, "echo": echo}
         data_str = json.dumps(data)
-        await self.ws.send(data_str)
+        asyncio.create_task(self.ws.send(data_str))
         result = await self.store.fetch(echo, WSAPI_TIMEOUT)
         return Response.model_validate(result)
 

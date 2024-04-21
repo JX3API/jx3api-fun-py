@@ -44,6 +44,7 @@ class ApiCaller(Generic[T]):
                 f"请求失败，code: {response.code}, msg: {response.msg}"
             )
         data = response.data
+        self.logger.debug(f"接收到ws请求结果: {data}")
         if isinstance(data, dict):
             return model.model_validate(data)
         elif isinstance(data, list):
