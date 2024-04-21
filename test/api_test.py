@@ -24,7 +24,7 @@ async def handle_all_event(event: EventModel) -> None:
 async def main():
     await handler.start_connect()
     await asyncio.sleep(5)
-    result = await handler.data_active_calendar()
+    result = await handler.data_exam_answer(match="古琴有几根弦")
     logger.info(f"收到ws结果：{result}")
     while True:
         try:

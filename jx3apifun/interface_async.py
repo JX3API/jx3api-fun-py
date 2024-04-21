@@ -10,9 +10,7 @@ from .model import (
     DataEquip,
     DataExamAnswer,
     DataHomeFlower,
-    DataHomeFurniture,
     DataHomeTravel,
-    DataLuckAdventure,
     DataLuckCollect,
     DataLuckStatistical,
     DataMatchAwesome,
@@ -87,7 +85,7 @@ class ApiInterfaceAsync:
         """
         ...
 
-    async def data_exam_answer(self, match: str, limit: int = 10) -> DataExamAnswer:
+    async def data_exam_answer(self, match: str, limit: int = 10) -> list[DataExamAnswer]:
         """
         说明:
             科举答案
@@ -112,7 +110,7 @@ class ApiInterfaceAsync:
         """
         ...
 
-    async def data_home_furniture(self, name: str) -> DataHomeFurniture:
+    async def data_home_furniture(self, name: str) -> DataHomeTravel:
         """
         说明:
             装饰详情
@@ -122,7 +120,7 @@ class ApiInterfaceAsync:
         """
         ...
 
-    async def data_home_travel(self, name: str) -> DataHomeTravel:
+    async def data_home_travel(self, name: str) -> list[DataHomeTravel]:
         """
         说明:
             器物谱地图产出装饰
@@ -132,7 +130,7 @@ class ApiInterfaceAsync:
         """
         ...
 
-    async def data_news_allnews(self, limit: int = 10) -> DataAllNews:
+    async def data_news_allnews(self, limit: int = 10) -> list[DataAllNews]:
         """
         说明:
             官方最新公告及新闻
@@ -142,7 +140,7 @@ class ApiInterfaceAsync:
         """
         ...
 
-    async def data_news_announce(self, limit: int = 10) -> DataAllNews:
+    async def data_news_announce(self, limit: int = 10) -> list[DataAllNews]:
         """
         说明:
             官方最新维护公告
@@ -152,7 +150,7 @@ class ApiInterfaceAsync:
         """
         ...
 
-    async def data_school_toxic(self, name: str) -> DataSchoolToxic:
+    async def data_school_toxic(self, name: str) -> list[DataSchoolToxic]:
         """
         说明:
             推荐的小药清单
@@ -242,7 +240,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_school_force(self, name: str) -> DataSchoolForce:
+    async def data_school_force(self, name: str) -> list[DataSchoolForce]:
         """
         说明:
             奇穴详细效果
@@ -256,7 +254,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_school_skills(self, name: str) -> DataSchoolSkills:
+    async def data_school_skills(self, name: str) -> list[DataSchoolSkills]:
         """
         说明:
             技能详细效果
@@ -288,7 +286,7 @@ class ApiInterfaceAsync:
         ],
         server: str = "-",
         limit: int = 1,
-    ) -> DataTiebaRandom:
+    ) -> list[DataTiebaRandom]:
         """
         说明:
             禁止轮询，随机搜索贴吧 : 818/616....
@@ -305,7 +303,7 @@ class ApiInterfaceAsync:
 
     @require_token
     @require_ticket
-    async def data_role_attribute(self, server: str, name: str) -> DataEquip:
+    async def data_role_attribute(self, server: str, name: str) -> list[DataEquip]:
         """
         说明:
             角色装备属性详情
@@ -337,7 +335,7 @@ class ApiInterfaceAsync:
 
     @require_token
     @require_ticket
-    async def data_luck_adventure(self, server: str, name: str) -> DataLuckAdventure:
+    async def data_luck_adventure(self, server: str, name: str) -> DataLuckStatistical:
         """
         说明:
             角色奇遇触发记录(不保证遗漏)
@@ -352,7 +350,9 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_luck_statistical(self, server: str, name: str) -> DataLuckStatistical:
+    async def data_luck_statistical(
+        self, server: str, name: str
+    ) -> list[DataLuckStatistical]:
         """
         说明:
             奇遇近期触发统计
@@ -369,7 +369,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_luck_server_statistical(
         self, name: str, limit: int = 20
-    ) -> DataLuckStatistical:
+    ) -> list[DataLuckStatistical]:
         """
         说明:
             统计全服近期奇遇记录，不区分区服。
@@ -384,7 +384,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_luck_collect(self, server: str, num: int = 7) -> DataLuckCollect:
+    async def data_luck_collect(self, server: str, num: int = 7) -> list[DataLuckCollect]:
         """
         说明:
             统计奇遇近期触发角色记录
@@ -455,7 +455,9 @@ class ApiInterfaceAsync:
 
     @require_token
     @require_ticket
-    async def data_match_schools(self, mode: Literal[22, 33, 55] = 33) -> DataMatchSchools:
+    async def data_match_schools(
+        self, mode: Literal[22, 33, 55] = 33
+    ) -> list[DataMatchSchools]:
         """
         说明:
             比赛统计门派数据
@@ -471,7 +473,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_member_recruit(
         self, server: str, keyword: str = "", table: int = 1
-    ) -> DataMemberRecruit:
+    ) -> list[DataMemberRecruit]:
         """
         说明:
             团队招募信息
@@ -487,7 +489,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_member_teacher(self, server: str, keyword: str = "") -> DataMember:
+    async def data_member_teacher(self, server: str, keyword: str = "") -> list[DataMember]:
         """
         说明:
             客户端师徒系统，师傅招募信息
@@ -502,7 +504,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_member_student(self, server: str, keyword: str = "") -> DataMember:
+    async def data_member_student(self, server: str, keyword: str = "") -> list[DataMember]:
         """
         说明:
             客户端师徒系统，徒弟招募信息
@@ -533,7 +535,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_server_event(
         self, name: Literal["恶人谷", "浩气盟"] = "恶人谷", limit: int = 100
-    ) -> DataServerEvent:
+    ) -> list[DataServerEvent]:
         """
         说明:
             全服阵营大事件
@@ -548,7 +550,9 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_trade_demon(self, server: str = "", limit: int = 10) -> DataTradeDemon:
+    async def data_trade_demon(
+        self, server: str = "", limit: int = 10
+    ) -> list[DataTradeDemon]:
         """
         说明:
             金价比例信息
@@ -580,7 +584,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_tieba_item_records(
         self, name: str, server: str = "-", limit: int = 1
-    ) -> DataTieBaItemRecords:
+    ) -> list[DataTieBaItemRecords]:
         """
         说明:
             来自贴吧的外观记录。
@@ -598,7 +602,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_valuables_statistical(
         self, server: str, name: str, limit: int = 20
-    ) -> DataValuablesStatistical:
+    ) -> list[DataValuablesStatistical]:
         """
         说明:
             统计副本掉落的贵重物品。
@@ -616,7 +620,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_valuables_server_statistical(
         self, name: str, limit: int = 30
-    ) -> DataValuablesStatistical:
+    ) -> list[DataValuablesStatistical]:
         """
         说明:
             统计当前赛季副本掉落的特殊物品。
@@ -631,7 +635,9 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_valuables_collect(self, server: str, num: int = 7) -> DataValuablesCollect:
+    async def data_valuables_collect(
+        self, server: str, num: int = 7
+    ) -> list[DataValuablesCollect]:
         """
         说明:
             副本掉落的特殊物品汇总
@@ -646,7 +652,7 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_server_antivice(self) -> DataServerAntivice:
+    async def data_server_antivice(self) -> list[DataServerAntivice]:
         """
         说明:
             诛恶事件历史记录(不允许轮询)
@@ -659,7 +665,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_rank_statistical(
         self, server: str, table: str, name: str
-    ) -> DataRankStatistical:
+    ) -> list[DataRankStatistical]:
         """
         说明:
             客户端战功榜与风云录
@@ -683,7 +689,7 @@ class ApiInterfaceAsync:
     @require_token
     async def data_rank_server_statistical(
         self, table: str, name: str
-    ) -> DataRankStatistical:
+    ) -> list[DataRankStatistical]:
         """
         说明:
             客户端战功榜与风云录，查看全服
@@ -707,7 +713,7 @@ class ApiInterfaceAsync:
     @require_ticket
     async def data_school_rank_statistical(
         self, school: str = "ALL", server: str = "ALL"
-    ) -> DataSchoolRankStatistical:
+    ) -> list[DataSchoolRankStatistical]:
         """
         说明:
             游戏资历榜单
@@ -722,7 +728,9 @@ class ApiInterfaceAsync:
         ...
 
     @require_token
-    async def data_duowan_statistical(self, server: str = "ALL") -> DataDuowanStatistical:
+    async def data_duowan_statistical(
+        self, server: str = "ALL"
+    ) -> list[DataDuowanStatistical]:
         """
         说明:
             服务器的统战歪歪。

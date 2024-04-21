@@ -39,15 +39,6 @@ class BaseData(BaseModel):
     ...
 
 
-class BaseListData(BaseData):
-    """
-    基础列表数据模型
-    """
-
-    items: list[BaseData]
-    """数据列表"""
-
-
 class DataActiveCalendar(BaseData):
     """
     日常活动接口返回值模型
@@ -126,7 +117,7 @@ class DataActiveCelebrity(BaseData):
     """时间"""
 
 
-class SimpeExamAnswer(BaseData):
+class DataExamAnswer(BaseData):
     """
     单个题目答案模型
     """
@@ -145,15 +136,6 @@ class SimpeExamAnswer(BaseData):
     """拼音"""
 
 
-class DataExamAnswer(BaseListData):
-    """
-    题目答案列表模型
-    """
-
-    items: list[SimpeExamAnswer]
-    """题目列表"""
-
-
 class DataHomeFlower(BaseData):
     """
     家园花卉接口返回值模型
@@ -162,7 +144,7 @@ class DataHomeFlower(BaseData):
     model_config = {"extra": "allow"}
 
 
-class DataHomeFurniture(BaseData):
+class DataHomeTravel(BaseData):
     """
     家园装饰接口返回值模型
     """
@@ -201,16 +183,7 @@ class DataHomeFurniture(BaseData):
     """提示"""
 
 
-class DataHomeTravel(BaseListData):
-    """
-    器物谱接口返回值模型
-    """
-
-    items: list[DataHomeFurniture]
-    """器物列表"""
-
-
-class OneDataAllNews(BaseModel):
+class DataAllNews(BaseModel):
     """
     单个新闻模型
     """
@@ -229,16 +202,7 @@ class OneDataAllNews(BaseModel):
     """链接"""
 
 
-class DataAllNews(BaseListData):
-    """
-    所有新闻模型
-    """
-
-    items: list[OneDataAllNews]
-    """新闻列表"""
-
-
-class OneDataSchoolToxic(BaseModel):
+class DataSchoolToxic(BaseModel):
     """
     单个小药模型
     """
@@ -257,15 +221,6 @@ class OneDataSchoolToxic(BaseModel):
     """状态"""
     datetime: str
     """时间"""
-
-
-class DataSchoolToxic(BaseListData):
-    """
-    所有小药模型
-    """
-
-    items: list[OneDataSchoolToxic]
-    """小药列表"""
 
 
 class DataServerMaster(BaseData):
@@ -407,7 +362,7 @@ class OneDataSchoolForceData(BaseModel):
     """子类型"""
 
 
-class OneDataSchoolForce(BaseModel):
+class DataSchoolForce(BaseModel):
     """
     单个门派奇穴
     """
@@ -418,16 +373,7 @@ class OneDataSchoolForce(BaseModel):
     """数据"""
 
 
-class DataSchoolForce(BaseListData):
-    """
-    门派奇穴
-    """
-
-    items: list[OneDataSchoolForce]
-    """奇穴列表"""
-
-
-class OneDataSchoolSkills(BaseModel):
+class DataSchoolSkills(BaseModel):
     """
     单个门派技能
     """
@@ -458,16 +404,7 @@ class OneDataSchoolSkills(BaseModel):
     """武器"""
 
 
-class DataSchoolSkills(BaseListData):
-    """
-    门派技能
-    """
-
-    items: list[OneDataSchoolSkills]
-    """技能列表"""
-
-
-class OneDataTiebaRandom(BaseModel):
+class DataTiebaRandom(BaseModel):
     """
     贴吧帖子
     """
@@ -488,15 +425,6 @@ class OneDataTiebaRandom(BaseModel):
     """链接"""
     date: str
     """日期"""
-
-
-class DataTiebaRandom(BaseListData):
-    """
-    贴吧帖子列表
-    """
-
-    items: list[OneDataTiebaRandom]
-    """帖子列表"""
 
 
 class OneFiveStone(BaseModel):
@@ -654,7 +582,7 @@ class Base2Type(BaseModel):
     """描述"""
 
 
-class OneEquip(BaseModel):
+class DataEquip(BaseModel):
     """
     装备数据
     """
@@ -693,15 +621,6 @@ class OneEquip(BaseModel):
     """基础属性1"""
     Base2Type: Base2Type
     """基础属性2"""
-
-
-class DataEquip(BaseListData):
-    """
-    装备数据
-    """
-
-    items: list[OneEquip]
-    """装备列表"""
 
 
 class BossProgress(BaseModel):
@@ -751,7 +670,7 @@ class DataRoleTeamCdList(DataDetailed):
     """副本数据"""
 
 
-class DataLuckAdventure(BaseData):
+class DataLuckStatistical(BaseData):
     """
     角色奇遇触发记录(不保证遗漏)
     """
@@ -772,15 +691,6 @@ class DataLuckAdventure(BaseData):
     """时间"""
 
 
-class DataLuckStatistical(BaseListData):
-    """
-    奇遇近期触发统计
-    """
-
-    items: list[DataLuckAdventure]
-    """奇遇列表"""
-
-
 class DataLuckCollectData(BaseModel):
     """
     奇遇汇总数据
@@ -792,7 +702,7 @@ class DataLuckCollectData(BaseModel):
     """触发时间"""
 
 
-class OneDataLuckCollect(BaseModel):
+class DataLuckCollect(BaseModel):
     """
     单个奇遇汇总
     """
@@ -805,15 +715,6 @@ class OneDataLuckCollect(BaseModel):
     """数量"""
     data: DataLuckCollectData
     """数据"""
-
-
-class DataLuckCollect(BaseListData):
-    """
-    奇遇汇总
-    """
-
-    items: list[OneDataLuckCollect]
-    """奇遇列表"""
 
 
 class DataRoleAchievementData(BaseModel):
@@ -986,7 +887,7 @@ class DataMatchAwesome(BaseData):
     """胜率"""
 
 
-class OneDataMatchSchools(BaseModel):
+class DataMatchSchools(BaseModel):
     """
     名剑统计
     """
@@ -999,16 +900,7 @@ class OneDataMatchSchools(BaseModel):
     """上次排名"""
 
 
-class DataMatchSchools(BaseListData):
-    """
-    比赛统计门派数据
-    """
-
-    items: list[OneDataMatchSchools]
-    """门派列表"""
-
-
-class OneDataMemberRecruit(BaseModel):
+class DataMemberRecruit(BaseModel):
     """
     团队招募信息
     """
@@ -1041,16 +933,7 @@ class OneDataMemberRecruit(BaseModel):
     """内容"""
 
 
-class DataMemberRecruit(BaseListData):
-    """
-    团队招募信息
-    """
-
-    items: list[OneDataMemberRecruit]
-    """招募列表"""
-
-
-class OneDataMember(BaseModel):
+class DataMember(BaseModel):
     """
     师父列表数据
     """
@@ -1079,15 +962,6 @@ class OneDataMember(BaseModel):
     """宣言"""
     time: int
     """时间"""
-
-
-class DataMember(BaseListData):
-    """
-    师徒列表数据
-    """
-
-    items: list[OneDataMember]
-    """师徒列表"""
 
 
 class OneDataServerSand(BaseModel):
@@ -1130,7 +1004,7 @@ class DataServerSand(BaseData):
     """沙盘数据"""
 
 
-class OneDataServerEvent(BaseModel):
+class DataServerEvent(BaseModel):
     """
     全服阵营大事件
     """
@@ -1153,16 +1027,7 @@ class OneDataServerEvent(BaseModel):
     """添加时间"""
 
 
-class DataServerEvent(BaseListData):
-    """
-    全服阵营大事件
-    """
-
-    items: list[OneDataServerEvent]
-    """事件列表"""
-
-
-class OneDataTradeDemon(BaseModel):
+class DataTradeDemon(BaseModel):
     """
     金价比例数据
     """
@@ -1191,16 +1056,7 @@ class OneDataTradeDemon(BaseModel):
     """日期"""
 
 
-class DataTradeDemon(BaseListData):
-    """
-    金价比例数据
-    """
-
-    items: list[OneDataTradeDemon]
-    """比例列表"""
-
-
-class OneDataTieBaItemRecords(BaseModel):
+class DataTieBaItemRecords(BaseModel):
     """
     贴吧物品记录
     """
@@ -1227,16 +1083,7 @@ class OneDataTieBaItemRecords(BaseModel):
     """时间"""
 
 
-class DataTieBaItemRecords(BaseListData):
-    """
-    贴吧物品记录
-    """
-
-    items: list[OneDataTieBaItemRecords]
-    """记录列表"""
-
-
-class OneDataValuablesStatistical(BaseModel):
+class DataValuablesStatistical(BaseModel):
     """
     物品统计
     """
@@ -1257,16 +1104,7 @@ class OneDataValuablesStatistical(BaseModel):
     """时间"""
 
 
-class DataValuablesStatistical(BaseListData):
-    """
-    物品统计
-    """
-
-    items: list[OneDataValuablesStatistical]
-    """统计列表"""
-
-
-class OneDataValuablesCollect(BaseModel):
+class DataValuablesCollect(BaseModel):
     """
     掉落汇总数据
     """
@@ -1275,20 +1113,11 @@ class OneDataValuablesCollect(BaseModel):
     """名称"""
     count: int
     """数量"""
-    data: OneDataValuablesStatistical
+    data: DataValuablesStatistical
     """数据"""
 
 
-class DataValuablesCollect(BaseListData):
-    """
-    掉落汇总
-    """
-
-    items: list[OneDataValuablesCollect]
-    """汇总列表"""
-
-
-class OneDataServerAntivice(BaseModel):
+class DataServerAntivice(BaseModel):
     """
     诛恶事件数据
     """
@@ -1305,16 +1134,7 @@ class OneDataServerAntivice(BaseModel):
     """时间"""
 
 
-class DataServerAntivice(BaseListData):
-    """
-    诛恶事件数据
-    """
-
-    items: list[OneDataServerAntivice]
-    """事件列表"""
-
-
-class OneDataRankStatistical(BaseModel):
+class DataRankStatistical(BaseModel):
     """
     风云榜单数据
     """
@@ -1345,16 +1165,7 @@ class OneDataRankStatistical(BaseModel):
     """时间"""
 
 
-class DataRankStatistical(BaseListData):
-    """
-    风云榜单数据
-    """
-
-    items: list[OneDataRankStatistical]
-    """榜单列表"""
-
-
-class OneDataSchoolRankStatistical(BaseModel):
+class DataSchoolRankStatistical(BaseModel):
     """
     资历榜单数据
     """
@@ -1375,16 +1186,7 @@ class OneDataSchoolRankStatistical(BaseModel):
     """头像"""
 
 
-class DataSchoolRankStatistical(BaseListData):
-    """
-    资历榜单数据
-    """
-
-    items: list[OneDataSchoolRankStatistical]
-    """榜单列表"""
-
-
-class OneDataDuowanStatistical(BaseModel):
+class DataDuowanStatisticalData(BaseModel):
     """
     单个频道数据
     """
@@ -1407,17 +1209,8 @@ class OneDataDuowanStatistical(BaseModel):
     """asid"""
 
 
-class DataDuowanStatisticalData(BaseModel):
+class DataDuowanStatistical(BaseModel):
     server: str
     """服务器"""
-    data: list[OneDataDuowanStatistical]
+    data: list[DataDuowanStatisticalData]
     """数据"""
-
-
-class DataDuowanStatistical(BaseListData):
-    """
-    多玩数据
-    """
-
-    items: list[DataDuowanStatisticalData]
-    """榜单列表"""
