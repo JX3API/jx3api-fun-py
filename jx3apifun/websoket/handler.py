@@ -1,20 +1,20 @@
 import inspect
 from functools import wraps
-from typing import Any, Callable, Coroutine, ParamSpec, TypeVar
+from typing import Any, Callable, Coroutine, ParamSpec, TypeVar, Union
 
 from jx3apifun.interface_async import ApiInterfaceAsync
 from jx3apifun.logger import DefaultLogger, LoggerProtocol
-from jx3apifun.model import BaseData
+from jx3apifun.model import BaseModel
 
 from .caller import ApiCaller, make_request
 from .driver import WebsocketDriver
 from .event import EventModel, EventType
 from .register import Register
 
-T = TypeVar("T", bound=BaseData)
-P = ParamSpec("P")
-
+T = TypeVar("T", bound=BaseModel)
 M = TypeVar("M", bound=EventModel)
+P = ParamSpec("P")
+ResponseModel = Union[T, list[T]]
 
 
 class WebsocketHandler(ApiInterfaceAsync):
@@ -37,14 +37,14 @@ class WebsocketHandler(ApiInterfaceAsync):
             setattr(self, method, self.__async_caller__(func))
 
     def __async_caller__(
-        self, func: Callable[P, Coroutine[Any, Any, T]]
-    ) -> Callable[P, Coroutine[Any, Any, T]]:
+        self, func: Callable[P, Coroutine[Any, Any, ResponseModel]]
+    ) -> Callable[P, Coroutine[Any, Any, ResponseModel]]:
         """
         异步调用接口
         """
 
         @wraps(func)
-        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> ResponseModel:
             signature = inspect.signature(func)
             bound = signature.bind(*args, **kwargs)
             bound.apply_defaults()
@@ -52,7 +52,7 @@ class WebsocketHandler(ApiInterfaceAsync):
                 bound.arguments.pop("self")
             request = make_request(func.__name__, **bound.arguments)
             model = signature.return_annotation
-            caller = ApiCaller[T](self.logger)
+            caller = ApiCaller(self.logger)
             return await caller(request, model)
 
         return wrapper

@@ -1,6 +1,6 @@
 import inspect
 from functools import wraps
-from typing import Any, Callable, Coroutine, ParamSpec, TypeVar
+from typing import Any, Callable, Coroutine, ParamSpec, TypeVar, Union
 
 from jx3apifun.interface import ApiInterface
 from jx3apifun.interface_async import ApiInterfaceAsync
@@ -11,6 +11,7 @@ from .caller import ApiCaller, make_request
 
 T = TypeVar("T", bound=BaseData)
 P = ParamSpec("P")
+ResponseModel = Union[T, list[T]]
 
 
 class SyncApiHandler(ApiInterface):
@@ -30,13 +31,13 @@ class SyncApiHandler(ApiInterface):
             setattr(self, method, self.__sync_caller__(func))
 
     @staticmethod
-    def __sync_caller__(func: Callable[P, T]) -> Callable[P, T]:
+    def __sync_caller__(func: Callable[P, ResponseModel]) -> Callable[P, ResponseModel]:
         """
         同步调用接口
         """
 
         @wraps(func)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> ResponseModel:
             signature = inspect.signature(func)
             bound = signature.bind(*args, **kwargs)
             bound.apply_defaults()
@@ -44,7 +45,7 @@ class SyncApiHandler(ApiInterface):
                 bound.arguments.pop("self")
             request = make_request(func.__name__, **bound.arguments)
             model = signature.return_annotation
-            caller = ApiCaller[T]()
+            caller = ApiCaller()
             return caller.call_api_sync(request, model)
 
         return wrapper
@@ -73,14 +74,14 @@ class AsyncApiHandler(ApiInterfaceAsync):
             setattr(self, method, self.__async_caller__(func))
 
     def __async_caller__(
-        self, func: Callable[P, Coroutine[Any, Any, T]]
-    ) -> Callable[P, Coroutine[Any, Any, T]]:
+        self, func: Callable[P, Coroutine[Any, Any, ResponseModel]]
+    ) -> Callable[P, Coroutine[Any, Any, ResponseModel]]:
         """
         异步调用接口
         """
 
         @wraps(func)
-        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> ResponseModel:
             signature = inspect.signature(func)
             bound = signature.bind(*args, **kwargs)
             bound.apply_defaults()
@@ -88,7 +89,7 @@ class AsyncApiHandler(ApiInterfaceAsync):
                 bound.arguments.pop("self")
             request = make_request(func.__name__, **bound.arguments)
             model = signature.return_annotation
-            caller = ApiCaller[T]()
+            caller = ApiCaller()
             return await caller.call_api_async(request, model)
 
         return wrapper

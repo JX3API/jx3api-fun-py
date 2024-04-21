@@ -3,18 +3,22 @@ from typing import (
     ParamSpec,
     Type,
     TypeVar,
+    Union,
     cast,
 )
 
+from pydantic import TypeAdapter
+
 from jx3apifun.exceptions import RequestError, ResponseDataError
 from jx3apifun.logger import LoggerProtocol
-from jx3apifun.model import BaseData, BaseListData, Request
+from jx3apifun.model import BaseData, Request
 from jx3apifun.permission import is_require_ticket, is_require_token
 
 from .driver import WebsocketDriver
 
 T = TypeVar("T", bound=BaseData)
 P = ParamSpec("P")
+ResponseModel = Union[T, list[T]]
 
 
 class ApiCaller(Generic[T]):
@@ -27,7 +31,7 @@ class ApiCaller(Generic[T]):
     def __init__(self, logger: LoggerProtocol) -> None:
         self.logger = logger
 
-    async def __call__(self, request: Request, model: Type[T]) -> T:
+    async def __call__(self, request: Request, model: Type[ResponseModel]) -> T:
         """
         调用api
         """
@@ -47,15 +51,8 @@ class ApiCaller(Generic[T]):
             )
         data = response.data
         self.logger.debug(f"接收到ws请求结果: {data}")
-        if isinstance(data, dict):
-            return model.model_validate(data)
-        elif isinstance(data, list):
-            data = cast(list, data)
-            list_model = cast(Type[BaseListData], model)
-            instance = list_model(items=data)
-            return cast(T, instance)
-
-        raise ResponseDataError(f"返回数据类型错误: {data}")
+        adapter = TypeAdapter(model)
+        return cast(T, adapter.validate_python(data))
 
 
 def make_request(func_name: str, **kwargs) -> Request:
