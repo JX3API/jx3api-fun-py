@@ -1,6 +1,7 @@
 from httpx import AsyncClient, Client
 
 from jx3apifun.exceptions import NetworkError, TicketError, TokenError
+from jx3apifun.logger import AbsLogger, LoggerProtocol
 from jx3apifun.model import Request, Response
 
 
@@ -9,6 +10,8 @@ class SyncDriver:
     同步接口驱动器
     """
 
+    logger: LoggerProtocol = AbsLogger()
+    """日志器"""
     client: Client = Client()
     """客户端"""
     token: str = ""
@@ -20,6 +23,12 @@ class SyncDriver:
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
+
+    def set_logger(self, logger: LoggerProtocol) -> None:
+        """
+        设置日志器
+        """
+        self.logger = logger
 
     def set_token(self, token: str) -> None:
         """
@@ -71,6 +80,8 @@ class AsyncDriver:
     异步接口驱动器
     """
 
+    logger: LoggerProtocol = AbsLogger()
+    """日志器"""
     client: AsyncClient = AsyncClient()
     """客户端"""
     token: str = ""
@@ -82,6 +93,12 @@ class AsyncDriver:
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
+
+    def set_logger(self, logger: LoggerProtocol) -> None:
+        """
+        设置日志器
+        """
+        self.logger = logger
 
     def set_token(self, token: str) -> None:
         """

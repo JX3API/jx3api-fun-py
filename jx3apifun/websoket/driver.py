@@ -7,6 +7,7 @@ from websockets.client import WebSocketClientProtocol
 
 from jx3apifun.const import WS_RUL, WSAPI_TIMEOUT
 from jx3apifun.exceptions import TicketError, TokenError
+from jx3apifun.logger import AbsLogger, LoggerProtocol
 from jx3apifun.model import Request, Response
 
 from .collator import Collator
@@ -20,6 +21,8 @@ class WebsocketDriver:
     websocket driver
     """
 
+    logger: LoggerProtocol = AbsLogger()
+    """logger"""
     token: str = ""
     """token"""
     ticket: str = ""
@@ -39,6 +42,12 @@ class WebsocketDriver:
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
+
+    def set_logger(self, logger: LoggerProtocol) -> None:
+        """
+        set logger
+        """
+        self.logger = logger
 
     def set_token(self, token: str) -> None:
         """

@@ -1,5 +1,6 @@
 from .http import AsyncApiHandler, SyncApiHandler
 from .jx3api import Jx3Api
+from .logger import LoggerProtocol
 from .websoket import WebsocketHandler
 
 api_instance = Jx3Api()
@@ -27,6 +28,13 @@ def get_async_handler() -> AsyncApiHandler:
     获取异步接口处理器
     """
     return api_instance.async_handler
+
+
+def set_logger(logger: LoggerProtocol) -> None:
+    """
+    设置日志器
+    """
+    api_instance.set_logger(logger)
 
 
 def set_ticket(ticket: str) -> None:

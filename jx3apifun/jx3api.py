@@ -1,4 +1,5 @@
 from .http import AsyncApiHandler, AsyncDriver, SyncApiHandler, SyncDriver
+from .logger import LoggerProtocol
 from .websoket import WebsocketDriver, WebsocketHandler
 
 
@@ -7,6 +8,8 @@ class Jx3Api:
     jx3api管理器，用于管理jx3api的各种接口
     """
 
+    logger: LoggerProtocol
+    """日志器"""
     sync_handler: SyncApiHandler = SyncApiHandler()
     """同步接口处理器"""
     sync_driver: SyncDriver = SyncDriver()
@@ -24,6 +27,18 @@ class Jx3Api:
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
+
+    def set_logger(self, logger: LoggerProtocol) -> None:
+        """
+        设置日志器
+        """
+        self.logger = logger
+        self.sync_handler.set_logger(logger)
+        self.sync_driver.set_logger(logger)
+        self.async_handler.set_logger(logger)
+        self.async_driver.set_logger(logger)
+        self.websocket_handler.set_logger(logger)
+        self.websocket_driver.set_logger(logger)
 
     def set_tiket(self, ticket: str) -> None:
         """
