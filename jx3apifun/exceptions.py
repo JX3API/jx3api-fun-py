@@ -10,6 +10,12 @@ class NetworkError(JX3APIException):
     pass
 
 
+class RequestError(JX3APIException):
+    """请求异常"""
+
+    pass
+
+
 class ResponseDataError(JX3APIException):
     """返回数据异常"""
 

@@ -6,7 +6,7 @@ from typing import (
     cast,
 )
 
-from jx3apifun.exceptions import ResponseDataError
+from jx3apifun.exceptions import RequestError, ResponseDataError
 from jx3apifun.logger import LoggerProtocol
 from jx3apifun.model import BaseData, BaseListData, Request
 from jx3apifun.permission import is_require_ticket, is_require_token
@@ -32,6 +32,8 @@ class ApiCaller(Generic[T]):
         调用api
         """
         driver = WebsocketDriver()
+        if not driver.connected:
+            raise RequestError("ws服务未连接")
         if is_require_token(request.name):
             driver.check_token(request)
         if is_require_ticket(request.name):
