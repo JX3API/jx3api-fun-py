@@ -31,8 +31,6 @@ class WebsocketDriver:
     """store object"""
     collator: Collator = Collator()
     """collator object"""
-    register: Register = Register()
-    """register object"""
     ws: WebSocketClientProtocol = WebSocketClientProtocol()
     """connection object"""
     connected: bool = False
@@ -139,7 +137,8 @@ class WebsocketDriver:
         """
         处理事件
         """
-        asyncio.create_task(self.register.run_handler(event))
+        register = Register()
+        asyncio.create_task(register.run_handler(event))
 
     def message_to_event(self, message: dict) -> EventModel:
         """
