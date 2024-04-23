@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="jx3apifun",
-    version="0.0.2",
+    version="0.0.3",
     author="JustUndertaker",
     author_email="806792561@qq.com",
     description="女生自用jx3api sdk for python",
@@ -17,6 +17,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
     ],
     python_requires=">=3.9",
