@@ -1231,7 +1231,7 @@ class DataTradeRecordData(Struct):
     """时间"""
 
 
-class DataTradeRecord(BaseData):
+class DataTradeRecord(BaseData, kw_only=True):
     """
     物价记录
     """
@@ -1246,7 +1246,7 @@ class DataTradeRecord(BaseData):
     """名称"""
     name: str
     """别名"""
-    subname: str
+    subname: Optional[str] = None
     """子别名"""
     row: str
     """行"""
