@@ -50,7 +50,7 @@ class ApiCaller(Generic[T]):
             )
         data = response.data
         self.logger.debug(f"接收到ws请求结果: {data}")
-        return convert(data, model)
+        return convert(data, model, strict=False)
 
 
 def make_request(func_name: str, **kwargs) -> Request:

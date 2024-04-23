@@ -39,7 +39,7 @@ class ApiCaller(Generic[T]):
 
         response = await driver.request(request)
         data = response.data
-        return convert(data, model)
+        return convert(data, model, strict=False)
 
     def call_api_sync(
         self, request: Request, model: Type[ResponseModel]
@@ -59,7 +59,7 @@ class ApiCaller(Generic[T]):
                 f"请求[{request.name}]出错，code: {response.code}, msg: {response.msg}"
             )
         data = response.data
-        return convert(data, model)
+        return convert(data, model, strict=False)
 
 
 def make_request(func_name: str, **kwargs) -> Request:
