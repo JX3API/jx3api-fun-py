@@ -6,7 +6,7 @@ from typing import (
     Union,
 )
 
-from pydantic import TypeAdapter
+from msgspec import convert
 
 from jx3apifun.const import API_URL
 from jx3apifun.exceptions import ResponseDataError
@@ -39,8 +39,7 @@ class ApiCaller(Generic[T]):
 
         response = await driver.request(request)
         data = response.data
-        adapter = TypeAdapter(model)
-        return adapter.validate_python(data)
+        return convert(data, model)
 
     def call_api_sync(
         self, request: Request, model: Type[ResponseModel]
@@ -60,8 +59,7 @@ class ApiCaller(Generic[T]):
                 f"请求[{request.name}]出错，code: {response.code}, msg: {response.msg}"
             )
         data = response.data
-        adapter = TypeAdapter(model)
-        return adapter.validate_python(data)
+        return convert(data, model)
 
 
 def make_request(func_name: str, **kwargs) -> Request:

@@ -1,9 +1,8 @@
 import asyncio
-import json
 import logging
-from typing import cast
 
 import websockets
+from msgspec import convert, json
 from websockets.client import WebSocketClientProtocol
 
 from jx3apifun.const import WS_RUL, WSAPI_TIMEOUT
@@ -97,10 +96,10 @@ class WebsocketDriver:
             await self.start_connect()
         echo = self.store.get_seq()
         data = {"action": request.url, "data": request.data, "echo": echo}
-        data_str = json.dumps(data)
+        data_str = json.encode(data)
         asyncio.create_task(self.ws.send(data_str))
         result = await self.store.fetch(echo, WSAPI_TIMEOUT)
-        return Response.model_validate(result)
+        return convert(result, Response)
 
     async def start_connect(self) -> None:
         """
@@ -142,7 +141,7 @@ class WebsocketDriver:
         """
         处理消息
         """
-        data = json.loads(message)
+        data = json.decode(message)
         if data.get("echo") is not None:
             self.store.add_result(data)
         else:
@@ -169,7 +168,5 @@ class WebsocketDriver:
             data = {"message": message.get("message")}
         else:
             data = message.get("data")
-        data = cast(dict, data)
-        data["action"] = action
         model = self.collator.get_model(action)
-        return model.model_validate(data)
+        return convert(data, model)

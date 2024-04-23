@@ -1,4 +1,5 @@
 from httpx import AsyncClient, Client
+from msgspec import json
 
 from jx3apifun.exceptions import NetworkError, TicketError, TokenError
 from jx3apifun.logger import DefaultLogger, LoggerProtocol
@@ -69,7 +70,7 @@ class SyncDriver:
             if response.status_code != 200:
                 raise NetworkError("网络请求错误")
 
-            return Response.model_validate(response.json())
+            return json.decode(response.content, type=Response)
 
         except Exception as e:
             raise NetworkError from e
@@ -140,7 +141,7 @@ class AsyncDriver:
             if response.status_code != 200:
                 raise NetworkError("网络请求错误")
 
-            return Response.model_validate(response.json())
+            return json.decode(response.content, type=Response)
 
         except Exception as e:
             raise NetworkError from e
