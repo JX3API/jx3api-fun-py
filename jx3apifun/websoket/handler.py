@@ -4,14 +4,14 @@ from typing import Any, Callable, Coroutine, ParamSpec, TypeVar, Union
 
 from jx3apifun.interface_async import ApiInterfaceAsync
 from jx3apifun.logger import DefaultLogger, LoggerProtocol
-from jx3apifun.model import BaseModel
+from jx3apifun.model import BaseData
 
 from .caller import ApiCaller, make_request
 from .driver import WebsocketDriver
 from .event import EventModel, EventType
 from .register import Register
 
-T = TypeVar("T", bound=BaseModel)
+T = TypeVar("T", bound=BaseData)
 M = TypeVar("M", bound=EventModel)
 P = ParamSpec("P")
 ResponseModel = Union[T, list[T]]

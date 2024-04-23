@@ -1,6 +1,7 @@
 from enum import Enum
+from typing import ClassVar
 
-from pydantic import BaseModel, ConfigDict
+from msgspec import Struct
 
 
 class EventType(Enum):
@@ -60,33 +61,32 @@ class EventType(Enum):
     """云从预告"""
 
 
-class EventModel(BaseModel):
+class EventModel(Struct, forbid_unknown_fields=False):
     """
     事件数据模型
     """
 
-    model_config = ConfigDict(extra="allow")
-    action: EventType = EventType.All
+    action: ClassVar[EventType] = EventType.All
     """事件类型"""
 
 
-class EventWelcome(EventModel):
+class EventWelcome(EventModel, kw_only=True):
     """
     欢迎消息
     """
 
-    action: EventType = EventType.Welcome
+    action: ClassVar[EventType] = EventType.Welcome
     """事件类型"""
     message: str
     """消息"""
 
 
-class EventQiyu(EventModel):
+class EventQiyu(EventModel, kw_only=True):
     """
     奇遇报时
     """
 
-    action: EventType = EventType.Qiyu
+    action: ClassVar[EventType] = EventType.Qiyu
     """事件类型"""
     zone: str
     """区服"""
@@ -102,12 +102,12 @@ class EventQiyu(EventModel):
     """时间戳"""
 
 
-class EventZhuaMa(EventModel):
+class EventZhuaMa(EventModel, kw_only=True):
     """
     抓马报时
     """
 
-    action: EventType = EventType.ZhuaMa
+    action: ClassVar[EventType] = EventType.ZhuaMa
     """事件类型"""
     zone: str
     """区服"""
@@ -123,12 +123,12 @@ class EventZhuaMa(EventModel):
     """时间戳"""
 
 
-class EventBuhuo(EventModel):
+class EventBuhuo(EventModel, kw_only=True):
     """
     捕获马驹
     """
 
-    action: EventType = EventType.Buhuo
+    action: ClassVar[EventType] = EventType.Buhuo
     """事件类型"""
     zone: str
     """区服"""
@@ -144,12 +144,12 @@ class EventBuhuo(EventModel):
     """时间戳"""
 
 
-class EventFuyaoStart(EventModel):
+class EventFuyaoStart(EventModel, kw_only=True):
     """
     扶摇开始
     """
 
-    action: EventType = EventType.FuyaoStart
+    action: ClassVar[EventType] = EventType.FuyaoStart
     """事件类型"""
     zone: str
     """区服"""
@@ -159,12 +159,12 @@ class EventFuyaoStart(EventModel):
     """时间戳"""
 
 
-class EventFuyaoEnd(EventModel):
+class EventFuyaoEnd(EventModel, kw_only=True):
     """
     扶摇结束
     """
 
-    action: EventType = EventType.FuyaoEnd
+    action: ClassVar[EventType] = EventType.FuyaoEnd
     """事件类型"""
     zone: str
     """区服"""
@@ -176,12 +176,12 @@ class EventFuyaoEnd(EventModel):
     """时间戳"""
 
 
-class EventYanhua(EventModel):
+class EventYanhua(EventModel, kw_only=True):
     """
     烟花报时
     """
 
-    action: EventType = EventType.Yanhua
+    action: ClassVar[EventType] = EventType.Yanhua
     """事件类型"""
     zone: str
     """区服"""
@@ -199,12 +199,12 @@ class EventYanhua(EventModel):
     """时间戳"""
 
 
-class EventXuanjing(EventModel):
+class EventXuanjing(EventModel, kw_only=True):
     """
     玄晶报时
     """
 
-    action: EventType = EventType.Xuanjing
+    action: ClassVar[EventType] = EventType.Xuanjing
     """事件类型"""
     zone: str
     """区服"""
@@ -220,12 +220,12 @@ class EventXuanjing(EventModel):
     """时间戳"""
 
 
-class EventZhuihun(EventModel):
+class EventZhuihun(EventModel, kw_only=True):
     """
     追魂点名
     """
 
-    action: EventType = EventType.Zhuihun
+    action: ClassVar[EventType] = EventType.Zhuihun
     """事件类型"""
     zone: str
     """区服"""
@@ -241,12 +241,12 @@ class EventZhuihun(EventModel):
     """时间戳"""
 
 
-class EventZhuEr(EventModel):
+class EventZhuEr(EventModel, kw_only=True):
     """
     诸恶事件
     """
 
-    action: EventType = EventType.ZhuEr
+    action: ClassVar[EventType] = EventType.ZhuEr
     """事件类型"""
     zone: str
     """区服"""
@@ -258,12 +258,12 @@ class EventZhuEr(EventModel):
     """时间戳"""
 
 
-class EventDiluFresh(EventModel):
+class EventDiluFresh(EventModel, kw_only=True):
     """
     的卢刷新
     """
 
-    action: EventType = EventType.DiluFresh
+    action: ClassVar[EventType] = EventType.DiluFresh
     """事件类型"""
     zone: str
     """区服"""
@@ -277,12 +277,12 @@ class EventDiluFresh(EventModel):
     """时间戳"""
 
 
-class EventDiluEnd(EventModel):
+class EventDiluEnd(EventModel, kw_only=True):
     """
     的卢捕获
     """
 
-    action: EventType = EventType.DiluEnd
+    action: ClassVar[EventType] = EventType.DiluEnd
     """事件类型"""
     zone: str
     """区服"""
@@ -302,12 +302,12 @@ class EventDiluEnd(EventModel):
     """时间戳"""
 
 
-class EventDiluJingPai(EventModel):
+class EventDiluJingPai(EventModel, kw_only=True):
     """
     的卢竞拍
     """
 
-    action: EventType = EventType.DiluJingPai
+    action: ClassVar[EventType] = EventType.DiluJingPai
     """事件类型"""
     zone: str
     """区服"""
@@ -325,12 +325,12 @@ class EventDiluJingPai(EventModel):
     """时间戳"""
 
 
-class EventLiangcang(EventModel):
+class EventLiangcang(EventModel, kw_only=True):
     """
     粮仓被劫
     """
 
-    action: EventType = EventType.Liangcang
+    action: ClassVar[EventType] = EventType.Liangcang
     """事件类型"""
     zone: str
     """区服"""
@@ -344,12 +344,12 @@ class EventLiangcang(EventModel):
     """时间戳"""
 
 
-class EventDajiang(EventModel):
+class EventDajiang(EventModel, kw_only=True):
     """
     大将重置
     """
 
-    action: EventType = EventType.Dajiang
+    action: ClassVar[EventType] = EventType.Dajiang
     """事件类型"""
     zone: str
     """区服"""
@@ -361,12 +361,12 @@ class EventDajiang(EventModel):
     """时间戳"""
 
 
-class EventDaqi(EventModel):
+class EventDaqi(EventModel, kw_only=True):
     """
     大旗被夺
     """
 
-    action: EventType = EventType.Daqi
+    action: ClassVar[EventType] = EventType.Daqi
     """事件类型"""
     zone: str
     """区服"""
@@ -382,12 +382,12 @@ class EventDaqi(EventModel):
     """时间戳"""
 
 
-class EventJudian(EventModel):
+class EventJudian(EventModel, kw_only=True):
     """
     据点占领（有帮会）
     """
 
-    action: EventType = EventType.Judian
+    action: ClassVar[EventType] = EventType.Judian
     """事件类型"""
     zone: str
     """区服"""
@@ -403,12 +403,12 @@ class EventJudian(EventModel):
     """时间戳"""
 
 
-class EventJudianNo(EventModel):
+class EventJudianNo(EventModel, kw_only=True):
     """
     据点占领（无帮会）
     """
 
-    action: EventType = EventType.JudianNo
+    action: ClassVar[EventType] = EventType.JudianNo
     """事件类型"""
     zone: str
     """区服"""
@@ -422,12 +422,12 @@ class EventJudianNo(EventModel):
     """时间戳"""
 
 
-class EventGongxian(EventModel):
+class EventGongxian(EventModel, kw_only=True):
     """
     贡献结算
     """
 
-    action: EventType = EventType.Gongxian
+    action: ClassVar[EventType] = EventType.Gongxian
     """事件类型"""
     zone: str
     """区服"""
@@ -441,12 +441,12 @@ class EventGongxian(EventModel):
     """时间戳"""
 
 
-class EventKaifu(EventModel):
+class EventKaifu(EventModel, kw_only=True):
     """
     开服监控
     """
 
-    action: EventType = EventType.Kaifu
+    action: ClassVar[EventType] = EventType.Kaifu
     """事件类型"""
     server: str
     """服务器"""
@@ -454,12 +454,12 @@ class EventKaifu(EventModel):
     """状态"""
 
 
-class EventXinwen(EventModel):
+class EventXinwen(EventModel, kw_only=True):
     """
     新闻资讯
     """
 
-    action: EventType = EventType.Xinwen
+    action: ClassVar[EventType] = EventType.Xinwen
     """事件类型"""
     type: str
     """类型"""
@@ -471,12 +471,12 @@ class EventXinwen(EventModel):
     """日期"""
 
 
-class EventGengxin(EventModel):
+class EventGengxin(EventModel, kw_only=True):
     """
     游戏更新
     """
 
-    action: EventType = EventType.Gengxin
+    action: ClassVar[EventType] = EventType.Gengxin
     """事件类型"""
     old_version: str
     """旧版本"""
@@ -488,12 +488,12 @@ class EventGengxin(EventModel):
     """包大小"""
 
 
-class EventBagua(EventModel):
+class EventBagua(EventModel, kw_only=True):
     """
     八卦速报
     """
 
-    action: EventType = EventType.Bagua
+    action: ClassVar[EventType] = EventType.Bagua
     """事件类型"""
     subclass: str
     """子类"""
@@ -509,12 +509,12 @@ class EventBagua(EventModel):
     """日期"""
 
 
-class EventGuanai(EventModel):
+class EventGuanai(EventModel, kw_only=True):
     """
     关隘预告
     """
 
-    action: EventType = EventType.Guanai
+    action: ClassVar[EventType] = EventType.Guanai
     """事件类型"""
     server: str
     """服务器"""
@@ -524,12 +524,12 @@ class EventGuanai(EventModel):
     """首领刷新时间戳"""
 
 
-class EventYuncong(EventModel):
+class EventYuncong(EventModel, kw_only=True):
     """
     云从预告
     """
 
-    action: EventType = EventType.Yuncong
+    action: ClassVar[EventType] = EventType.Yuncong
     """事件类型"""
     name: str
     """云从名"""

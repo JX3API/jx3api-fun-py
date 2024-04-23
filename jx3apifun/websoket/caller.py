@@ -4,10 +4,9 @@ from typing import (
     Type,
     TypeVar,
     Union,
-    cast,
 )
 
-from pydantic import TypeAdapter
+from msgspec import convert
 
 from jx3apifun.exceptions import RequestError, ResponseDataError
 from jx3apifun.logger import LoggerProtocol
@@ -51,8 +50,7 @@ class ApiCaller(Generic[T]):
             )
         data = response.data
         self.logger.debug(f"接收到ws请求结果: {data}")
-        adapter = TypeAdapter(model)
-        return cast(T, adapter.validate_python(data))
+        return convert(data, model)
 
 
 def make_request(func_name: str, **kwargs) -> Request:

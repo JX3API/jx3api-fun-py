@@ -1,9 +1,9 @@
 from typing import Optional, Union
 
-from pydantic import BaseModel, Field
+from msgspec import Struct, field
 
 
-class Request(BaseModel):
+class Request(Struct):
     """
     发送请求模型
     """
@@ -16,7 +16,7 @@ class Request(BaseModel):
     """请求参数"""
 
 
-class Response(BaseModel):
+class Response(Struct):
     """
     返回值模型
     """
@@ -31,7 +31,7 @@ class Response(BaseModel):
     """返回数据"""
 
 
-class BaseData(BaseModel):
+class BaseData(Struct):
     """
     基础数据模型
     """
@@ -39,7 +39,7 @@ class BaseData(BaseModel):
     ...
 
 
-class DataActiveCalendar(BaseData):
+class DataActiveCalendar(BaseData, kw_only=True):
     """
     日常活动接口返回值模型
     """
@@ -68,7 +68,7 @@ class DataActiveCalendar(BaseData):
     """卡牌"""
 
 
-class ToDayData(BaseModel):
+class ToDayData(Struct):
     """
     当天日期
     """
@@ -142,7 +142,7 @@ class DataHomeFlower(BaseData):
     model_config = {"extra": "allow"}
 
 
-class DataHomeTravel(BaseData):
+class DataHomeTravel(BaseData, kw_only=True):
     """
     家园装饰接口返回值模型
     """
@@ -181,7 +181,7 @@ class DataHomeTravel(BaseData):
     """提示"""
 
 
-class DataAllNews(BaseModel):
+class DataAllNews(Struct):
     """
     单个新闻模型
     """
@@ -200,14 +200,14 @@ class DataAllNews(BaseModel):
     """链接"""
 
 
-class DataSchoolToxic(BaseModel):
+class DataSchoolToxic(Struct):
     """
     单个小药模型
     """
 
     id: int
     """id"""
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """类型"""
     name: str
     """名称"""
@@ -276,7 +276,7 @@ class DataServerStatus(BaseData):
     """状态"""
 
 
-class DataDetailed(BaseData):
+class DataDetailed(BaseData, kw_only=True):
     """
     更新角色信息
     """
@@ -315,7 +315,7 @@ class DataDetailed(BaseData):
     """人物头像"""
 
 
-class OneSchoolMatrixDescs(BaseModel):
+class OneSchoolMatrixDescs(Struct):
     """
     单个职业阵眼描述
     """
@@ -341,14 +341,14 @@ class DataSchoolMatrix(BaseData):
     """描述列表"""
 
 
-class OneDataSchoolForceData(BaseModel):
+class OneDataSchoolForceData(Struct):
     """
     单个奇穴数据
     """
 
     name: str
     """名称"""
-    type: int = Field(alias="class")
+    type: int = field(name="class")
     """分类"""
     desc: str
     """描述"""
@@ -360,7 +360,7 @@ class OneDataSchoolForceData(BaseModel):
     """子类型"""
 
 
-class DataSchoolForce(BaseModel):
+class DataSchoolForce(Struct):
     """
     单个门派奇穴
     """
@@ -371,7 +371,7 @@ class DataSchoolForce(BaseModel):
     """数据"""
 
 
-class DataSchoolSkillsData(BaseModel):
+class DataSchoolSkillsData(Struct):
     """
     单个门派技能
     """
@@ -407,13 +407,13 @@ class DataSchoolSkills(BaseData):
     门派技能
     """
 
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """分类"""
     data: list[DataSchoolSkillsData]
     """数据"""
 
 
-class DataTiebaRandom(BaseModel):
+class DataTiebaRandom(Struct):
     """
     贴吧帖子
     """
@@ -436,7 +436,7 @@ class DataTiebaRandom(BaseModel):
     """日期"""
 
 
-class OneFiveStone(BaseModel):
+class OneFiveStone(Struct):
     """
     五行石数据
     """
@@ -461,7 +461,7 @@ class OneFiveStone(BaseModel):
     """百分比"""
 
 
-class OneColorStoneAttr(BaseModel):
+class OneColorStoneAttr(Struct):
     """
     五彩石属性
     """
@@ -476,7 +476,7 @@ class OneColorStoneAttr(BaseModel):
     """百分比"""
 
 
-class ColorStone(BaseModel):
+class ColorStone(Struct):
     """
     五彩石数据
     """
@@ -485,7 +485,7 @@ class ColorStone(BaseModel):
     """id"""
     name: str
     """名称"""
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """分类"""
     level: str
     """等级"""
@@ -499,7 +499,7 @@ class ColorStone(BaseModel):
     """属性"""
 
 
-class OneModifyType(BaseModel):
+class OneModifyType(Struct):
     """
     属性类型
     """
@@ -516,7 +516,7 @@ class OneModifyType(BaseModel):
     """百分比"""
 
 
-class OnePerManentEnchantAttriDesc(BaseModel):
+class OnePerManentEnchantAttriDesc(Struct):
     """
     附魔属性描述
     """
@@ -525,7 +525,7 @@ class OnePerManentEnchantAttriDesc(BaseModel):
     """描述"""
 
 
-class OnePerManentEnchantAttri(BaseModel):
+class OnePerManentEnchantAttri(Struct):
     """
     附魔属性
     """
@@ -538,7 +538,7 @@ class OnePerManentEnchantAttri(BaseModel):
     """属性描述"""
 
 
-class OnePerManentEnchant(BaseModel):
+class OnePerManentEnchant(Struct):
     """
     附魔数据
     """
@@ -555,7 +555,7 @@ class OnePerManentEnchant(BaseModel):
     """属性"""
 
 
-class BaseTypeAttri(BaseModel):
+class BaseTypeAttri(Struct, kw_only=True):
     """
     基础属性
     """
@@ -574,7 +574,7 @@ class BaseTypeAttri(BaseModel):
     """百分比"""
 
 
-class Base1Type(BaseModel):
+class Base1Type(Struct):
     """
     基础属性
     """
@@ -589,7 +589,7 @@ class Base1Type(BaseModel):
     """描述"""
 
 
-class Base2Type(BaseModel):
+class Base2Type(Struct):
     """
     基础属性
     """
@@ -604,7 +604,7 @@ class Base2Type(BaseModel):
     """描述"""
 
 
-class CommonEnchant(BaseModel):
+class CommonEnchant(Struct):
     """
     通用附魔
     """
@@ -619,14 +619,14 @@ class CommonEnchant(BaseModel):
     """描述"""
 
 
-class DataRoleEquip(BaseModel):
+class DataRoleEquip(Struct, kw_only=True):
     """
     装备数据
     """
 
     name: str
     """名称"""
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """分类"""
     icon: str
     """图标"""
@@ -662,7 +662,7 @@ class DataRoleEquip(BaseModel):
     """基础属性2"""
 
 
-class DataRoleQixue(BaseModel):
+class DataRoleQixue(Struct):
     """
     奇穴数据
     """
@@ -681,7 +681,7 @@ class DataRoleQixue(BaseModel):
     """描述"""
 
 
-class DataRolePanelData(BaseModel):
+class DataRolePanelData(Struct):
     """
     角色面板数据
     """
@@ -694,7 +694,7 @@ class DataRolePanelData(BaseModel):
     """数值"""
 
 
-class DataRolePanel(BaseModel):
+class DataRolePanel(Struct):
     """
     角色面板
     """
@@ -718,7 +718,7 @@ class DataRoleAttribute(DataDetailed):
     """面板数据"""
 
 
-class BossProgress(BaseModel):
+class BossProgress(Struct):
     """
     Boss进度
     """
@@ -735,7 +735,7 @@ class BossProgress(BaseModel):
     """进度id"""
 
 
-class OneTeamMapData(BaseModel):
+class OneTeamMapData(Struct):
     """
     单个副本数据
     """
@@ -807,7 +807,7 @@ class DataLuckStatistical(BaseData):
     """时间"""
 
 
-class DataLuckCollectData(BaseModel):
+class DataLuckCollectData(Struct):
     """
     奇遇汇总数据
     """
@@ -818,7 +818,7 @@ class DataLuckCollectData(BaseModel):
     """触发时间"""
 
 
-class DataLuckCollect(BaseModel):
+class DataLuckCollect(Struct):
     """
     单个奇遇汇总
     """
@@ -833,7 +833,7 @@ class DataLuckCollect(BaseModel):
     """数据"""
 
 
-class DataRoleAchievementData(BaseModel):
+class DataRoleAchievementData(Struct, kw_only=True):
     """
     角色成就数据
     """
@@ -846,7 +846,7 @@ class DataRoleAchievementData(BaseModel):
     """点赞数"""
     name: str
     """奇遇名称"""
-    upClass: str = Field(alias="class")
+    upClass: str = field(name="class")
     """类型"""
     subClass: str
     """子类型"""
@@ -887,7 +887,7 @@ class DataRoleAchievement(DataDetailed):
     """成就列表"""
 
 
-class OneDataMatchPerformance(BaseModel):
+class OneDataMatchPerformance(Struct):
     """
     战绩表现
     """
@@ -910,20 +910,20 @@ class OneDataMatchPerformance(BaseModel):
     """胜率"""
 
 
-class DataMatchPerformance(BaseModel):
+class DataMatchPerformance(Struct):
     """
     战绩表现
     """
 
-    match22: Optional[OneDataMatchPerformance] = Field(alias="2v2", default=None)
+    match22: Optional[OneDataMatchPerformance] = field(name="2v2", default=None)
     """2v2表现"""
-    match33: Optional[OneDataMatchPerformance] = Field(alias="3v3", default=None)
+    match33: Optional[OneDataMatchPerformance] = field(name="3v3", default=None)
     """3v3表现"""
-    match55: Optional[OneDataMatchPerformance] = Field(alias="5v5", default=None)
+    match55: Optional[OneDataMatchPerformance] = field(name="5v5", default=None)
     """5v5表现"""
 
 
-class DataMatchHistory(BaseModel):
+class DataMatchHistory(Struct):
     """
     战绩历史
     """
@@ -952,7 +952,7 @@ class DataMatchHistory(BaseModel):
     """结束时间"""
 
 
-class DataMatchTrend(BaseModel):
+class DataMatchTrend(Struct):
     """
     战绩走势
     """
@@ -1003,7 +1003,7 @@ class DataMatchAwesome(BaseData):
     """胜率"""
 
 
-class DataMatchSchools(BaseModel):
+class DataMatchSchools(Struct):
     """
     名剑统计
     """
@@ -1016,7 +1016,7 @@ class DataMatchSchools(BaseModel):
     """上次排名"""
 
 
-class DataMemberRecruitData(BaseModel):
+class DataMemberRecruitData(Struct):
     """
     团队招募信息
     """
@@ -1064,7 +1064,7 @@ class DataMemberRecruit(BaseData):
     """时间"""
 
 
-class DataMemberData(BaseModel):
+class DataMemberData(Struct, kw_only=True):
     """
     师徒列表数据
     """
@@ -1108,7 +1108,7 @@ class DataMember(BaseData):
     """师徒列表"""
 
 
-class OneDataServerSand(BaseModel):
+class OneDataServerSand(Struct):
     """
     服务器沙盘数据
     """
@@ -1148,7 +1148,7 @@ class DataServerSand(BaseData):
     """沙盘数据"""
 
 
-class DataServerEvent(BaseModel):
+class DataServerEvent(Struct):
     """
     全服阵营大事件
     """
@@ -1171,7 +1171,7 @@ class DataServerEvent(BaseModel):
     """添加时间"""
 
 
-class DataTradeDemon(BaseModel):
+class DataTradeDemon(Struct):
     """
     金价比例数据
     """
@@ -1190,9 +1190,9 @@ class DataTradeDemon(BaseModel):
     """373数据"""
     uu898: str
     """898数据"""
-    from_5173: str = Field(alias="5173")
+    from_5173: str = field(name="5173")
     """5173数据"""
-    from_7881: str = Field(alias="7881")
+    from_7881: str = field(name="7881")
     """7881数据"""
     time: int
     """时间"""
@@ -1200,7 +1200,7 @@ class DataTradeDemon(BaseModel):
     """日期"""
 
 
-class DataTradeRecordData(BaseModel):
+class DataTradeRecordData(Struct):
     """
     物价数据
     """
@@ -1209,7 +1209,7 @@ class DataTradeRecordData(BaseModel):
     """id"""
     index: int
     """序号"""
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """类型"""
     zone: str
     """区服"""
@@ -1238,15 +1238,15 @@ class DataTradeRecord(BaseData):
 
     id: int
     """id"""
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """类型"""
     subclass: str
     """子类别"""
     name: str
     """名称"""
-    alias: str
+    name: str
     """别名"""
-    subalias: str
+    subname: str
     """子别名"""
     row: str
     """行"""
@@ -1262,7 +1262,7 @@ class DataTradeRecord(BaseData):
     """数据"""
 
 
-class DataTieBaItemRecords(BaseModel):
+class DataTieBaItemRecords(Struct):
     """
     贴吧物品记录
     """
@@ -1289,7 +1289,7 @@ class DataTieBaItemRecords(BaseModel):
     """时间"""
 
 
-class DataValuablesStatistical(BaseModel):
+class DataValuablesStatistical(Struct):
     """
     物品统计
     """
@@ -1310,7 +1310,7 @@ class DataValuablesStatistical(BaseModel):
     """时间"""
 
 
-class DataValuablesCollect(BaseModel):
+class DataValuablesCollect(Struct):
     """
     掉落汇总数据
     """
@@ -1323,7 +1323,7 @@ class DataValuablesCollect(BaseModel):
     """数据"""
 
 
-class DataServerAntivice(BaseModel):
+class DataServerAntivice(Struct):
     """
     诛恶事件数据
     """
@@ -1340,14 +1340,14 @@ class DataServerAntivice(BaseModel):
     """时间"""
 
 
-class DataRankStatistical(BaseModel):
+class DataRankStatistical(Struct, kw_only=True):
     """
     风云榜单数据
     """
 
     id: int
     """id"""
-    type: str = Field(alias="class")
+    type: str = field(name="class")
     """类型"""
     zone: str
     """区服"""
@@ -1371,7 +1371,7 @@ class DataRankStatistical(BaseModel):
     """时间"""
 
 
-class DataSchoolRankStatistical(BaseModel):
+class DataSchoolRankStatistical(Struct):
     """
     资历榜单数据
     """
@@ -1392,7 +1392,7 @@ class DataSchoolRankStatistical(BaseModel):
     """头像"""
 
 
-class DataDuowanStatisticalData(BaseModel):
+class DataDuowanStatisticalData(Struct):
     """
     单个频道数据
     """
@@ -1439,7 +1439,7 @@ class DataActiveMonsterSkill(BaseData):
     """描述"""
 
 
-class DataActiveMonsterData(BaseModel):
+class DataActiveMonsterData(Struct):
     """
     百战数据
     """
@@ -1465,7 +1465,7 @@ class DataActiveMonster(BaseData):
     """数据"""
 
 
-class DataHorseRecord(BaseModel):
+class DataHorseRecord(Struct):
     """
     的卢记录
     """
@@ -1504,16 +1504,16 @@ class DataHorseRecord(BaseModel):
     """结束时间"""
 
 
-class DataHorseData(BaseModel):
+class DataHorseData(Struct):
     """
     马场事件数据
     """
 
-    yinshan: list[str] = Field(alias="阴山大草原")
+    yinshan: list[str] = field(name="阴山大草原")
     """阴山大草原"""
-    kunpengdao: list[str] = Field(alias="鲲鹏岛")
+    kunpengdao: list[str] = field(name="鲲鹏岛")
     """鲲鹏岛"""
-    heigebi: list[str] = Field(alias="黑戈壁")
+    heigebi: list[str] = field(name="黑戈壁")
     """黑戈壁"""
 
 
@@ -1647,7 +1647,7 @@ class DataMusicKugou(BaseData):
     """图片"""
 
 
-class DataFraudTiebaData(BaseModel):
+class DataFraudTiebaData(Struct):
     """
     贴吧详情
     """
@@ -1662,7 +1662,7 @@ class DataFraudTiebaData(BaseModel):
     """时间"""
 
 
-class DataFraudRecord(BaseModel):
+class DataFraudRecord(Struct):
     """
     骗子记录
     """
@@ -1684,7 +1684,7 @@ class DataFraudDetail(BaseData):
     """记录"""
 
 
-class DataIdiomSolitaireData(BaseModel):
+class DataIdiomSolitaireData(Struct):
     """
     成语接龙记录
     """
@@ -1746,7 +1746,7 @@ class DataSoundConverter(BaseData):
     """链接"""
 
 
-class DataRoleMonsterSkill(BaseModel):
+class DataRoleMonsterSkill(Struct):
     """
     个人百战技能
     """

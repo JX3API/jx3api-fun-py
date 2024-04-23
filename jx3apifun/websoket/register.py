@@ -60,7 +60,7 @@ class Register(Generic[T]):
             raise EventParamError(
                 f"事件处理函数[{func.__name__}]中，注册事件参数类型错误."
             )
-        if action != param_type.model_fields["action"].default:
+        if action != param_type.action:
             raise EventParamError(
                 f"事件处理函数[{func.__name__}]中，注册的事件[{action}]和传递的事件参数[{param_type}]不匹配."
             )
