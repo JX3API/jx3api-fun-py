@@ -1,6 +1,6 @@
 from .http import AsyncApiHandler, AsyncDriver, SyncApiHandler, SyncDriver
 from .logger import LoggerProtocol
-from .websoket import Register, WebsocketDriver, WebsocketHandler
+from .websocket import Register, WebsocketDriver, WebsocketHandler
 
 
 class Jx3Api:
