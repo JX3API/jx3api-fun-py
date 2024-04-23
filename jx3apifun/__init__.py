@@ -3,7 +3,7 @@ from typing import Any
 from .http import AsyncApiHandler, SyncApiHandler
 from .jx3api import Jx3Api
 from .logger import LoggerProtocol
-from .websoket import WebsocketHandler
+from .websocket import WebsocketHandler
 
 api_instance = Jx3Api()
 """
